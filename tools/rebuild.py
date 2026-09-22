@@ -14,9 +14,7 @@ MAX=95*1024*1024
 failed=[]; mapped={}; rsc={}
 
 def wipe():
- for p in ROOT.iterdir():
-  if p.name not in {'.git','.github','tools'}:
-   shutil.rmtree(p) if p.is_dir() else p.unlink()
+ pass
 
 def norm(s):
  if not s:return None
