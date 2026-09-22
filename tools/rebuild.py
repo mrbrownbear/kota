@@ -180,28 +180,31 @@ def audit(fixed,rew,inj):
 
 def validate_local_runtime():
  missing=[]
- attr=re.compile(r\"(?:src|href|poster)=[\\\"']([^\\\"']+)[\\\"']\",re.I)
- cssurl=re.compile(r\"url\\([\\\"']?([^)\\\"']+)[\\\"']?\\)\",re.I)
+ exts={'.js','.css','.mjs','.woff','.woff2','.ttf','.otf','.png','.jpg','.jpeg','.webp','.gif','.svg','.mp4','.webm','.wasm','.splinecode','.json','.bin'}
+ attr_double=re.compile(r'(?:src|href|poster)="([^"]+)"',re.I)
+ attr_single=re.compile(r"(?:src|href|poster)='([^']+)'",re.I)
+ cssurl=re.compile(r'url[(]([^)]+)[)]',re.I)
  for p in ROOT.rglob('*.html'):
-  for u in attr.findall(read(p)):
+  refs=attr_double.findall(read(p))+attr_single.findall(read(p))
+  for u in refs:
    if not u.startswith('/'):continue
    q=u.split('?',1)[0]
-   if not re.search(r'\\.(?:js|css|mjs|woff2?|ttf|otf|png|jpe?g|webp|gif|svg|mp4|webm|wasm|splinecode|json|bin)
-,q,re.I):continue
+   if Path(q).suffix.lower() not in exts:continue
    if not (ROOT/q.lstrip('/')).is_file():missing.append({'file':p.relative_to(ROOT).as_posix(),'ref':u})
  for p in ROOT.rglob('*.css'):
-  for u in cssurl.findall(read(p)):
+  for raw in cssurl.findall(read(p)):
+   u=raw.strip().strip('"\'')
    if not u.startswith('/'):continue
    q=u.split('?',1)[0]
+   if Path(q).suffix.lower() not in exts:continue
    if not (ROOT/q.lstrip('/')).is_file():missing.append({'file':p.relative_to(ROOT).as_posix(),'ref':u})
  critical=ROOT/'_next/static/chunks/app/(home)'
  if not critical.exists() or not any(critical.glob('page-*.js')):
   missing.append({'file':'index.html','ref':'/_next/static/chunks/app/(home)/page-*.js'})
- (ROOT/'local-runtime-validation.json').write_text(json.dumps({'missing':missing,'count':len(missing)},indent=2)+'\\n')
+ (ROOT/'local-runtime-validation.json').write_text(json.dumps({'missing':missing,'count':len(missing)},indent=2)+'\n')
  if missing:
   print(json.dumps({'local_runtime_missing':missing[:100]},indent=2))
   raise SystemExit(f'local runtime validation failed: {len(missing)} missing assets')
-
 def main():
  wipe();seed();grab_assets();fixed=media_fix();exact=allmaps();rew=rewrite(exact);runtime(exact);inj=inject();support();audit(fixed,rew,inj)
  if not (ROOT/'index.html').exists():raise SystemExit('index missing')
