@@ -78,24 +78,23 @@ def read(p):
   try:return p.read_text('utf-8',errors='ignore')
   except:return ''
 
-ABS=re.compile(r'https?://(?:kota\.co\.uk|kota-content\.b-cdn\.net|content\.kota\.co\.uk|unpkg\.com)/[^\\\"\'<>\s]+',re.I)
-ROOTREF=re.compile(r'(?<![A-Za-z0-9_:])/(?:_next/static|images|matter|app/uploads)/[^\\\"\'<>\s]+',re.I)\nROOTASSET=re.compile(r'(?<![A-Za-z0-9_:])/(?:[^\\\"\'<>\s?#]+/)*[^\\\"\'<>\s?#]+\\.(?:js|css|mjs|woff2?|ttf|otf|png|jpe?g|webp|gif|svg|mp4|webm|wasm|splinecode|json|bin)(?:\\?[^\\\"\'<>\s#]*)?',re.I)
+ABS=re.compile(r'https?://(?:kota\.co\.uk|kota-content\.b-cdn\.net|content\.kota\.co\.uk|unpkg\.com)/[^\\"\'<>\s]+',re.I)
+ROOTREF=re.compile(r'(?<![A-Za-z0-9_:])/(?:_next/static|images|matter|app/uploads)/[^\\"\'<>\s]+',re.I)
+ROOTASSET=re.compile(r'(?<![A-Za-z0-9_:])/(?:[^\\"\'<>\s?#]+/)*[^\\"\'<>\s?#]+\.(?:js|css|mjs|woff2?|ttf|otf|png|jpe?g|webp|gif|svg|mp4|webm|wasm|splinecode|json|bin)(?:\?[^\\"\'<>\s#]*)?',re.I)
 
 def discover():
  out=set()
  for p in texts():
   s=read(p)
-  for x in ABS.findall(s):
-   u=norm(x)
-   if u:out.add(u)
-  for x in ROOTREF.findall(s):
-   u=norm(x)
-   if u:out.add(u)
+  for rx in (ABS,ROOTREF,ROOTASSET):
+   for x in rx.findall(s):
+    u=norm(x)
+    if u:out.add(u)
  return out
 
 def grab_assets():
  seen=set(mapped)
- for _ in range(6):
+ for _ in range(8):
   urls=[u for u in discover() if u not in seen];seen.update(urls)
   if not urls:break
   def one(u):
@@ -188,14 +187,14 @@ def validate_local_runtime():
   refs=attr_double.findall(read(p))+attr_single.findall(read(p))
   for u in refs:
    if not u.startswith('/'):continue
-   q=u.split('?',1)[0]
+   q=unquote(u.split('?',1)[0])
    if Path(q).suffix.lower() not in exts:continue
    if not (ROOT/q.lstrip('/')).is_file():missing.append({'file':p.relative_to(ROOT).as_posix(),'ref':u})
  for p in ROOT.rglob('*.css'):
   for raw in cssurl.findall(read(p)):
    u=raw.strip().strip('"\'')
    if not u.startswith('/'):continue
-   q=u.split('?',1)[0]
+   q=unquote(u.split('?',1)[0])
    if Path(q).suffix.lower() not in exts:continue
    if not (ROOT/q.lstrip('/')).is_file():missing.append({'file':p.relative_to(ROOT).as_posix(),'ref':u})
  critical=ROOT/'_next/static/chunks/app/(home)'
@@ -205,6 +204,7 @@ def validate_local_runtime():
  if missing:
   print(json.dumps({'local_runtime_missing':missing[:100]},indent=2))
   raise SystemExit(f'local runtime validation failed: {len(missing)} missing assets')
+
 def main():
  wipe();seed();grab_assets();fixed=media_fix();exact=allmaps();rew=rewrite(exact);runtime(exact);inj=inject();support();audit(fixed,rew,inj)
  if not (ROOT/'index.html').exists():raise SystemExit('index missing')
