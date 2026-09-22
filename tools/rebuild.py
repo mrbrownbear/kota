@@ -1,214 +1,198 @@
 from pathlib import Path
-from urllib.parse import urlsplit, urlunsplit, unquote, quote
-from urllib.request import Request, urlopen
-from urllib.error import HTTPError
-import concurrent.futures, hashlib, json, re, shutil, time
+import json
+import re
 
-ROOT=Path(__file__).resolve().parents[1]
-ORIGIN='https://kota.co.uk'
-HOSTS={'kota.co.uk','kota-content.b-cdn.net','content.kota.co.uk','unpkg.com'}
-ROUTES=['/','/agencies','/agency','/b2b-transformation','/blog','/healthcare','/media-entertainment','/retail','/service/brand-strategy-and-identity','/service/web-design-development','/work/florence']
-UA='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/153 Safari/537.36'
-TEXT={'.html','.css','.js','.mjs','.json','.svg','.txt','.xml','.bin','.map'}
-MAX=95*1024*1024
-failed=[]; mapped={}; rsc={}
+ROOT = Path(__file__).resolve().parents[1]
+SITE = ROOT / "__sitecloner"
 
-def wipe():
- pass
+TRANSITION_STYLE = 'style="position:fixed;z-index:50;width:100vw;height:100vh;background:#efefef"'
+TRANSITION_STYLE_FIXED = 'style="position:fixed;z-index:50;width:100vw;height:100vh;background:#efefef;clip-path:polygon(0 100%, 100% 100%, 100% 100%, 0 100%);pointer-events:none;opacity:0"'
 
-def norm(s):
- if not s:return None
- s=s.replace('\\/','/').replace('&amp;','&').replace('\\u0026','&').strip('\\\"\'()[]{}<> ,;\n\r\t')
- if s.startswith('//'):s='https:'+s
- if s.startswith('/'):s=ORIGIN+s
- if not s.startswith(('http://','https://')):return None
- try:u=urlsplit(s)
- except:return None
- if (u.hostname or '').lower() not in HOSTS:return None
- if u.scheme=='http':s=urlunsplit(('https',u.netloc,u.path,u.query,''))
- return s.split('#',1)[0]
 
-def rel(url, kind='asset'):
- u=urlsplit(url); host=(u.hostname or '').lower(); path=unquote(u.path or '/')
- if '..' in Path(path).parts:return None
- if host=='kota.co.uk':
-  if kind=='page':return 'index.html' if path=='/' else path.strip('/')+'/index.html'
-  if kind=='rsc':return '__sitecloner/rsc/'+hashlib.sha1((path or '/').encode()).hexdigest()[:16]+'.bin'
-  return path.lstrip('/') or 'index.html'
- return '__external__/'+host+'/'+path.lstrip('/')
+def read(path):
+    return path.read_text(encoding="utf-8", errors="ignore")
 
-def headers(rsc_req=False):
- h={'User-Agent':UA,'Accept-Encoding':'identity','Cache-Control':'no-cache','Accept':'*/*'}
- if rsc_req:h|={'RSC':'1','Next-Router-Prefetch':'1','Accept':'text/x-component,*/*;q=0.8'}
- return h
 
-def get(url, out, rsc_req=False):
- p=ROOT/out
- if p.exists() and p.stat().st_size:return True
- p.parent.mkdir(parents=True,exist_ok=True); err=''
- for n in range(2):
-  try:
-   u=urlsplit(url); safe=urlunsplit((u.scheme,u.netloc,quote(u.path,safe='/%:@'),quote(u.query,safe='=&%:/?@,+'),''))
-   with urlopen(Request(safe,headers=headers(rsc_req)),timeout=45) as q:
-    if q.headers.get('Content-Length') and int(q.headers['Content-Length'])>MAX:raise RuntimeError('too large')
-    b=q.read(MAX+1)
-   if len(b)>MAX:raise RuntimeError('too large')
-   p.write_bytes(b); mapped[url]='/'+out
-   return True
-  except Exception as e:err=f'{type(e).__name__}: {e}';time.sleep(.25*(n+1))
- failed.append({'url':url,'path':out,'error':err});return False
+def write_support_files():
+    SITE.mkdir(exist_ok=True)
+    (SITE / "empty.js").write_text("/* intentionally empty local analytics stub */\n", encoding="utf-8")
+    (SITE / "runtime.js").write_text(
+        '(()=>{"use strict";window.__sitecloner={local:true};})();\n',
+        encoding="utf-8",
+    )
+    (SITE / "fixes.css").write_text(
+        """/* Local clone compatibility fixes. */
+body > div[style*="position:fixed"][style*="z-index:50"][style*="width:100vw"][style*="height:100vh"][style*="background:#efefef"] {
+  clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%) !important;
+  pointer-events: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+""",
+        encoding="utf-8",
+    )
 
-def seed():
- for route in ROUTES:
-  url=ORIGIN+route
-  get(url,rel(url,'page'))
-  sep='&' if '?' in url else '?'; ru=url+sep+'_rsc=offline'
-  rp=rel(url,'rsc')
-  if get(ru,rp,True):rsc[route]='/'+rp
 
-def texts():
- for p in ROOT.rglob('*'):
-  if p.is_file() and '.git' not in p.parts and p.suffix.lower() in TEXT and p.stat().st_size<10*1024*1024:yield p
+def repair_html():
+    changed = []
+    for path in ROOT.rglob("*.html"):
+        if ".git" in path.parts:
+            continue
+        html = read(path)
+        original = html
 
-def read(p):
- try:return p.read_text('utf-8')
- except:
-  try:return p.read_text('utf-8',errors='ignore')
-  except:return ''
+        # A previous injector replaced the opening head tag with the literal text \1.
+        html = html.replace(
+            '\\1<meta http-equiv="Content-Security-Policy"',
+            '<head><meta http-equiv="Content-Security-Policy"',
+            1,
+        )
 
-ABS=re.compile(r'https?://(?:kota\.co\.uk|kota-content\.b-cdn\.net|content\.kota\.co\.uk|unpkg\.com)/[^\\"\'<>\s]+',re.I)
-ROOTREF=re.compile(r'(?<![A-Za-z0-9_:])/(?:_next/static|images|matter|app/uploads)/[^\\"\'<>\s]+',re.I)
-ROOTASSET=re.compile(r'(?<![A-Za-z0-9_:])/(?:[^\\"\'<>\s?#]+/)*[^\\"\'<>\s?#]+\.(?:js|css|mjs|woff2?|ttf|otf|png|jpe?g|webp|gif|svg|mp4|webm|wasm|splinecode|json|bin)(?:\?[^\\"\'<>\s#]*)?',re.I)
+        # Remove the old browser monkeypatch and restrictive CSP. Static assets are
+        # already local, so neither is required and both can interfere with hydration.
+        html = re.sub(
+            r'<meta\s+http-equiv=["\']Content-Security-Policy["\'][^>]*>',
+            "",
+            html,
+            flags=re.I,
+        )
+        html = re.sub(
+            r'<script\s+src=["\']/__sitecloner/runtime\.js["\']\s*></script>',
+            "",
+            html,
+            flags=re.I,
+        )
 
-def discover():
- out=set()
- for p in texts():
-  for x in ABS.findall(read(p)):
-   u=norm(x)
-   if u:out.add(u)
- for p in ROOT.rglob('*.html'):
-  s=read(p)
-  for rx in (ROOTREF,ROOTASSET):
-   for x in rx.findall(s):
-    u=norm(x)
-    if u:out.add(u)
- return out
+        # Remove automatic external analytics preloads. Analytics is also neutralised
+        # inside the layout chunk below.
+        html = re.sub(
+            r'<link\s+rel=["\']preload["\']\s+href=["\']https://www\.googletagmanager\.com/[^"\']+["\']\s+as=["\']script["\']\s*/?>',
+            "",
+            html,
+            flags=re.I,
+        )
 
-def grab_assets():
- seen=set(mapped)
- for _ in range(8):
-  urls=[u for u in discover() if u not in seen];seen.update(urls)
-  if not urls:break
-  def one(u):
-   rp=rel(u)
-   if rp:get(u,rp)
-  with concurrent.futures.ThreadPoolExecutor(max_workers=12) as ex:list(ex.map(one,urls))
+        # Guarantee a valid head element even if an older malformed clone is repaired.
+        if not re.search(r'<head(?:\s[^>]*)?>', html, flags=re.I):
+            html = re.sub(
+                r'(<html[^>]*>)',
+                lambda m: m.group(1) + "<head>",
+                html,
+                count=1,
+                flags=re.I,
+            )
 
-def goodmp4(p):
- try:b=p.read_bytes();return len(b)>1024 and b'ftyp' in b[:128] and b'moov' in b
- except:return False
+        # Hide the SSR route transition curtain immediately. The client chunk is also
+        # patched so React agrees with this state after hydration.
+        html = html.replace(TRANSITION_STYLE, TRANSITION_STYLE_FIXED)
 
-def media_fix():
- allmp4=list(ROOT.rglob('*.mp4')); good=[p for p in allmp4 if goodmp4(p)]
- pref=ROOT/'__external__/kota-content.b-cdn.net/app/uploads/2025/08/GOAT-FeatureVideo.mp4'
- fb=pref if goodmp4(pref) else (good[0] if good else None); fixed=[]
- if not fb:return fixed
- data=fb.read_bytes()
- for p in allmp4:
-  if not goodmp4(p):p.write_bytes(data);fixed.append(p.relative_to(ROOT).as_posix())
- return fixed
+        # A tiny stylesheet is enough for a fail-safe without mutating DOM prototypes.
+        fixes_tag = '<link rel="stylesheet" href="/__sitecloner/fixes.css" data-local-fix="true"/>'
+        html = html.replace(fixes_tag, "")
+        html = re.sub(
+            r'(<head(?:\s[^>]*)?>)',
+            lambda m: m.group(1) + fixes_tag,
+            html,
+            count=1,
+            flags=re.I,
+        )
 
-def allmaps():
- exact=dict(mapped)
- for p in ROOT.rglob('*'):
-  if not p.is_file() or '.git' in p.parts:continue
-  q=p.relative_to(ROOT).as_posix()
-  if q.startswith('__external__/kota-content.b-cdn.net/'):
-   tail=q.split('__external__/kota-content.b-cdn.net/',1)[1]
-   exact.setdefault('https://kota-content.b-cdn.net/'+tail,'/'+q)
-   exact.setdefault('https://content.kota.co.uk/'+tail,'/'+q)
- return exact
+        if html != original:
+            path.write_text(html, encoding="utf-8")
+            changed.append(path.relative_to(ROOT).as_posix())
+    return changed
 
-def rewrite(exact):
- pairs=[]
- for a,b in exact.items():
-  u=urlsplit(a)
-  if (u.hostname or '').lower()=='kota.co.uk':continue
-  if (ROOT/b.lstrip('/')).exists():pairs.extend(((a,b),(a.replace('/','\\/'),b.replace('/','\\/'))))
- pairs.extend((('https://unpkg.com/','/__external__/unpkg.com/'),('https://kota-content.b-cdn.net/','/__external__/kota-content.b-cdn.net/'),('https://content.kota.co.uk/','/__external__/kota-content.b-cdn.net/')))
- pairs.sort(key=lambda x:len(x[0]),reverse=True);n=0
- for p in texts():
-  if p.as_posix().endswith('__sitecloner/runtime.js'):continue
-  s=read(p); old=s
-  s=s.replace('https://kota.co.uk/','/').replace('http://kota.co.uk/','/')
-  s=s.replace('https:\\/\\/kota.co.uk\\/','\\/').replace('http:\\/\\/kota.co.uk\\/','\\/')
-  for a,b in pairs:s=s.replace(a,b)
-  if s!=old:p.write_text(s,encoding='utf-8');n+=1
- return n
-def runtime(exact):
- d=ROOT/'__sitecloner';d.mkdir(exist_ok=True)
- M=json.dumps(exact,separators=(',',':'));R=json.dumps(rsc,separators=(',',':'))
- js=r'''(()=>{"use strict";const M=__M__,R=__R__,O="https://kota.co.uk",B="/__sitecloner/blocked";const A=u=>{try{return new URL(String(u),location.href)}catch{return null}},F=u=>{if(u==null)return u;u=String(u);if(/^(data:|blob:|about:|javascript:|mailto:|tel:|#)/i.test(u))return u;if(M[u])return M[u];let x=A(u);if(!x)return u;if((x.origin===location.origin||x.origin===O)&&x.searchParams.has("_rsc")&&R[x.pathname])return R[x.pathname];if(x.origin===location.origin||x.origin===O)return x.pathname+x.search+x.hash;if(M[x.href])return M[x.href];return /^(https?:|wss?:)$/i.test(x.protocol)?B:u};window.__sitecloner={map:F,strict:true};let f=window.fetch;if(f)window.fetch=function(i,n){if(i instanceof Request){let u=F(i.url);if(u!==i.url)i=new Request(u,i)}else i=F(i);return f.call(this,i,n)};let o=XMLHttpRequest.prototype.open;XMLHttpRequest.prototype.open=function(m,u,...a){return o.call(this,m,F(u),...a)};if(navigator.sendBeacon){let b=navigator.sendBeacon.bind(navigator);navigator.sendBeacon=(u,d)=>F(u)===B?false:b(F(u),d)};if(navigator.serviceWorker)navigator.serviceWorker.register=()=>Promise.reject(Error("offline"));for(let [K,p] of [[HTMLImageElement,"src"],[HTMLScriptElement,"src"],[HTMLIFrameElement,"src"],[HTMLSourceElement,"src"],[HTMLVideoElement,"src"],[HTMLAudioElement,"src"],[HTMLLinkElement,"href"],[HTMLAnchorElement,"href"],[HTMLFormElement,"action"]]){let d=Object.getOwnPropertyDescriptor(K.prototype,p);if(d&&d.set)Object.defineProperty(K.prototype,p,{get:d.get,set(v){return d.set.call(this,F(v))},configurable:true})}let s=Element.prototype.setAttribute;Element.prototype.setAttribute=function(n,v){if(/^(src|href|action|poster|data)$/i.test(n))v=F(v);return s.call(this,n,v)};let w=window.open;window.open=function(u,...a){u=F(u);return u===B?null:w.call(this,u,...a)}})();'''.replace('__M__',M).replace('__R__',R)
- (d/'runtime.js').write_text(js,encoding='utf-8');(d/'blocked').write_text('');(d/'empty.js').write_text('');(d/'empty.css').write_text('')
 
-def inject():
- csp="<meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'self' data: blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; frame-src 'self' blob:; worker-src 'self' blob:; object-src 'none'; base-uri 'self'\">"
- tag=csp+'<script src="/__sitecloner/runtime.js"></script>';n=0
- for p in ROOT.rglob('*.html'):
-  s=read(p)
-  if tag in s:continue
-  s=re.sub(r'(<head[^>]*>)',r'\\1'+tag,s,count=1,flags=re.I) if re.search(r'<head[^>]*>',s,re.I) else tag+s
-  p.write_text(s,encoding='utf-8');n+=1
- return n
-def support():
- aliases={'landing-page/agencies':'agencies','landing-page/b2b-transformation':'b2b-transformation','landing-page/healthcare':'healthcare','landing-page/media-entertainment':'media-entertainment','landing-page/retail':'retail'}
- for a,b in aliases.items():
-  src=ROOT/b/'index.html'; dst=ROOT/a/'index.html'; dst.parent.mkdir(parents=True,exist_ok=True)
-  if src.exists():shutil.copy2(src,dst)
- (ROOT/'.nojekyll').write_text('')
- (ROOT/'vercel.json').write_text(json.dumps({'cleanUrls':True,'headers':[{'source':'/(.*)','headers':[{'key':'X-Content-Type-Options','value':'nosniff'}]}]},indent=2)+'\n')
- (ROOT/'README.md').write_text('# KOTA local static clone\n\nAll captured site assets are served locally. Unknown external runtime requests are blocked by `__sitecloner/runtime.js`.\n\nRun with `python -m http.server 8000` and open `http://localhost:8000`.\n')
+def patch_layout_chunk():
+    chunks = sorted((ROOT / "_next/static/chunks/app").glob("layout-*.js"))
+    if not chunks:
+        raise SystemExit("layout chunk not found")
 
-def audit(fixed,rew,inj):
- remote=set()
- for p in texts():
-  if p.as_posix().endswith('__sitecloner/runtime.js'):continue
-  for x in ABS.findall(read(p)):
-   if norm(x):remote.add(x)
- files=[p for p in ROOT.rglob('*') if p.is_file() and '.git' not in p.parts]
- a={'routes':ROUTES,'files':len(files),'bytes':sum(p.stat().st_size for p in files),'download_failure_count':len(failed),'download_failures':failed[:200],'repaired_mp4s':fixed,'rewritten_text_files':rew,'runtime_injected_html':inj,'remaining_supported_remote_count':len(remote),'remaining_supported_remote_urls':sorted(remote)[:300],'offline_firewall':True}
- (ROOT/'offline-audit.json').write_text(json.dumps(a,indent=2)+'\n');print(json.dumps(a,indent=2))
+    changed = []
+    for path in chunks:
+        js = read(path)
+        original = js
 
-def validate_local_runtime():
- missing=[]
- exts={'.js','.css','.mjs','.woff','.woff2','.ttf','.otf','.png','.jpg','.jpeg','.webp','.gif','.svg','.mp4','.webm','.wasm','.splinecode','.json','.bin'}
- attr_double=re.compile(r'(?:src|href|poster)="([^"]+)"',re.I)
- attr_single=re.compile(r"(?:src|href|poster)='([^']+)'",re.I)
- cssurl=re.compile(r'url[(]([^)]+)[)]',re.I)
- for p in ROOT.rglob('*.html'):
-  refs=attr_double.findall(read(p))+attr_single.findall(read(p))
-  for u in refs:
-   if not u.startswith('/'):continue
-   q=unquote(u.split('?',1)[0])
-   if Path(q).suffix.lower() not in exts:continue
-   if not (ROOT/q.lstrip('/')).is_file():missing.append({'file':p.relative_to(ROOT).as_posix(),'ref':u})
- for p in ROOT.rglob('*.css'):
-  for raw in cssurl.findall(read(p)):
-   u=raw.strip().strip('"\'')
-   if not u.startswith('/'):continue
-   q=unquote(u.split('?',1)[0])
-   if Path(q).suffix.lower() not in exts:continue
-   if not (ROOT/q.lstrip('/')).is_file():missing.append({'file':p.relative_to(ROOT).as_posix(),'ref':u})
- critical=ROOT/'_next/static/chunks/app/(home)'
- if not critical.exists() or not any(critical.glob('page-*.js')):
-  missing.append({'file':'index.html','ref':'/_next/static/chunks/app/(home)/page-*.js'})
- (ROOT/'local-runtime-validation.json').write_text(json.dumps({'missing':missing,'count':len(missing)},indent=2)+'\n')
- if missing:
-  print(json.dumps({'local_runtime_missing':missing[:100]},indent=2))
-  raise SystemExit(f'local runtime validation failed: {len(missing)} missing assets')
+        # The original transition curtain starts fully visible and only GSAP hides it
+        # in useEffect. Start it hidden instead, so hydration can never leave a white
+        # full-screen panel over the site.
+        js = js.replace(
+            'style:{position:"fixed",zIndex:50,width:"100vw",height:"100vh",background:"#efefef"}',
+            'style:{position:"fixed",zIndex:50,width:"100vw",height:"100vh",background:"#efefef",clipPath:"polygon(0 100%, 100% 100%, 100% 100%, 0 100%)",pointerEvents:"none",opacity:0}',
+        )
+
+        # Static hosting does not provide the Next server required by client RSC route
+        # transitions. Use normal document navigation so every captured page hydrates
+        # from its own local HTML instead of getting stuck behind the transition curtain.
+        js = js.replace(
+            'i=async e=>{a("PENDING"),n.prefetch(e),setTimeout(()=>{window.scrollTo(0,-100),n.push(e,{scroll:!0})},1e3)}',
+            'i=async e=>{window.location.assign(e)}',
+        )
+
+        # Keep analytics from creating live network requests after hydration.
+        js = js.replace(
+            'https://www.googletagmanager.com/gtag/js?id=',
+            '/__sitecloner/empty.js?gtag=',
+        )
+        js = js.replace(
+            'https://www.googletagmanager.com/gtm.js?id=',
+            '/__sitecloner/empty.js?gtm=',
+        )
+
+        if js != original:
+            path.write_text(js, encoding="utf-8")
+            changed.append(path.relative_to(ROOT).as_posix())
+    return changed
+
+
+def validate():
+    problems = []
+    html_files = list(ROOT.rglob("*.html"))
+    for path in html_files:
+        if ".git" in path.parts:
+            continue
+        html = read(path)
+        rel = path.relative_to(ROOT).as_posix()
+        if not re.search(r'<head(?:\s[^>]*)?>', html, flags=re.I):
+            problems.append({"file": rel, "issue": "missing head"})
+        if '\\1<meta http-equiv="Content-Security-Policy"' in html:
+            problems.append({"file": rel, "issue": "literal backreference remains"})
+        if 'http-equiv="Content-Security-Policy"' in html:
+            problems.append({"file": rel, "issue": "legacy CSP remains"})
+        if '<script src="/__sitecloner/runtime.js"></script>' in html:
+            problems.append({"file": rel, "issue": "legacy runtime injection remains"})
+        if TRANSITION_STYLE in html:
+            problems.append({"file": rel, "issue": "visible transition curtain remains"})
+
+    layout_files = list((ROOT / "_next/static/chunks/app").glob("layout-*.js"))
+    for path in layout_files:
+        js = read(path)
+        if 'style:{position:"fixed",zIndex:50,width:"100vw",height:"100vh",background:"#efefef"}' in js:
+            problems.append({"file": path.relative_to(ROOT).as_posix(), "issue": "client transition curtain still starts visible"})
+        if 'https://www.googletagmanager.com/gtag/js?id=' in js or 'https://www.googletagmanager.com/gtm.js?id=' in js:
+            problems.append({"file": path.relative_to(ROOT).as_posix(), "issue": "live analytics URL remains"})
+
+    report = {
+        "html_files_checked": len(html_files),
+        "layout_files_checked": len(layout_files),
+        "problem_count": len(problems),
+        "problems": problems,
+    }
+    (ROOT / "hydration-repair-validation.json").write_text(
+        json.dumps(report, indent=2) + "\n", encoding="utf-8"
+    )
+    print(json.dumps(report, indent=2))
+    if problems:
+        raise SystemExit(f"hydration repair validation failed: {len(problems)} problems")
+
 
 def main():
- wipe();seed();grab_assets();fixed=media_fix();exact=allmaps();rew=rewrite(exact);runtime(exact);inj=inject();support();audit(fixed,rew,inj)
- if not (ROOT/'index.html').exists():raise SystemExit('index missing')
- validate_local_runtime()
-main()
+    write_support_files()
+    html_changed = repair_html()
+    layout_changed = patch_layout_chunk()
+    validate()
+    print(json.dumps({"html_changed": html_changed, "layout_changed": layout_changed}, indent=2))
+
+
+if __name__ == "__main__":
+    main()
