@@ -50,7 +50,8 @@ def get(url, out, rsc_req=False):
  p.parent.mkdir(parents=True,exist_ok=True); err=''
  for n in range(4):
   try:
-   u=urlsplit(url); safe=urlunsplit((u.scheme,u.netloc,quote(u.path,safe='/%:@'),quote(u.query,safe='=&%:/?@,+'),''))\n   with urlopen(Request(safe,headers=headers(rsc_req)),timeout=45) as q:
+   u=urlsplit(url); safe=urlunsplit((u.scheme,u.netloc,quote(u.path,safe='/%:@'),quote(u.query,safe='=&%:/?@,+'),''))
+   with urlopen(Request(safe,headers=headers(rsc_req)),timeout=45) as q:
     if q.headers.get('Content-Length') and int(q.headers['Content-Length'])>MAX:raise RuntimeError('too large')
     b=q.read(MAX+1)
    if len(b)>MAX:raise RuntimeError('too large')
