@@ -48,7 +48,7 @@ def get(url, out, rsc_req=False):
  p=ROOT/out
  if p.exists() and p.stat().st_size:return True
  p.parent.mkdir(parents=True,exist_ok=True); err=''
- for n in range(4):
+ for n in range(2):
   try:
    u=urlsplit(url); safe=urlunsplit((u.scheme,u.netloc,quote(u.path,safe='/%:@'),quote(u.query,safe='=&%:/?@,+'),''))
    with urlopen(Request(safe,headers=headers(rsc_req)),timeout=45) as q:
@@ -57,7 +57,7 @@ def get(url, out, rsc_req=False):
    if len(b)>MAX:raise RuntimeError('too large')
    p.write_bytes(b); mapped[url]='/'+out
    return True
-  except Exception as e:err=f'{type(e).__name__}: {e}';time.sleep(n+1)
+  except Exception as e:err=f'{type(e).__name__}: {e}';time.sleep(.25*(n+1))
  failed.append({'url':url,'path':out,'error':err});return False
 
 def seed():
@@ -86,10 +86,14 @@ def discover():
  out=set()
  for p in texts():
   s=read(p)
-  for rx in (ABS,ROOTREF,ROOTASSET):
+  for rx in (ABS,ROOTREF):
    for x in rx.findall(s):
     u=norm(x)
     if u:out.add(u)
+ for p in ROOT.rglob('*.html'):
+  for x in ROOTASSET.findall(read(p)):
+   u=norm(x)
+   if u:out.add(u)
  return out
 
 def grab_assets():
