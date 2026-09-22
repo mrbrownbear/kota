@@ -1,5 +1,5 @@
-/* Local clone compatibility fixes. */
-body > div[style*="position:fixed"][style*="z-index:50"][style*="width:100vw"][style*="height:100vh"][style*="background:#efefef"] {
+/* Local clone compatibility fixes. Keep the original React DOM unchanged. */
+body > div[style="position:fixed;z-index:50;width:100vw;height:100vh;background:#efefef"] {
   clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%) !important;
   pointer-events: none !important;
   opacity: 0 !important;
