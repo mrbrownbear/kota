@@ -83,15 +83,15 @@ ROOTASSET=re.compile(r'(?<![A-Za-z0-9_:])/(?:[^\\"\'<>\s?#]+/)*[^\\"\'<>\s?#]+\.
 def discover():
  out=set()
  for p in texts():
+  for x in ABS.findall(read(p)):
+   u=norm(x)
+   if u:out.add(u)
+ for p in ROOT.rglob('*.html'):
   s=read(p)
-  for rx in (ABS,ROOTREF):
+  for rx in (ROOTREF,ROOTASSET):
    for x in rx.findall(s):
     u=norm(x)
     if u:out.add(u)
- for p in ROOT.rglob('*.html'):
-  for x in ROOTASSET.findall(read(p)):
-   u=norm(x)
-   if u:out.add(u)
  return out
 
 def grab_assets():
