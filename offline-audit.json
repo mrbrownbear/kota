@@ -13,12 +13,27 @@
     "/work/florence"
   ],
   "files": 1915,
-  "bytes": 707744591,
-  "download_failure_count": 11,
+  "bytes": 707728208,
+  "download_failure_count": 14,
   "download_failures": [
     {
-      "url": "https://kota.co.uk/landing-page/agencies/",
-      "path": "landing-page/agencies/",
+      "url": "https://kota.co.uk/landing-page/retail/",
+      "path": "landing-page/retail/",
+      "error": "HTTPError: HTTP Error 404: Not Found"
+    },
+    {
+      "url": "https://kota.co.uk/_next/static/chunks/app/(home",
+      "path": "_next/static/chunks/app/(home",
+      "error": "HTTPError: HTTP Error 404: Not Found"
+    },
+    {
+      "url": "https://kota.co.uk/w",
+      "path": "w",
+      "error": "HTTPError: HTTP Error 404: Not Found"
+    },
+    {
+      "url": "https://kota.co.uk/media-entertainmen",
+      "path": "media-entertainmen",
       "error": "HTTPError: HTTP Error 404: Not Found"
     },
     {
@@ -27,13 +42,18 @@
       "error": "HTTPError: HTTP Error 404: Not Found"
     },
     {
-      "url": "https://kota.co.uk/landing-page/healthcare/",
-      "path": "landing-page/healthcare/",
+      "url": "https://kota-content.b-cdn.net/app/uplo",
+      "path": "__external__/kota-content.b-cdn.net/app/uplo",
       "error": "HTTPError: HTTP Error 404: Not Found"
     },
     {
-      "url": "https://kota.co.uk/app/uploads/2024/11/Logo-Profile.png",
-      "path": "app/uploads/2024/11/Logo-Profile.png",
+      "url": "https://kota-content.b-cdn.net/app/uploads/202",
+      "path": "__external__/kota-content.b-cdn.net/app/uploads/202",
+      "error": "HTTPError: HTTP Error 404: Not Found"
+    },
+    {
+      "url": "https://kota.co.uk/landing-page/agencies/",
+      "path": "landing-page/agencies/",
       "error": "HTTPError: HTTP Error 404: Not Found"
     },
     {
@@ -47,29 +67,24 @@
       "error": "HTTPError: HTTP Error 404: Not Found"
     },
     {
-      "url": "https://kota-content.b-cdn.net/app/uplo",
-      "path": "__external__/kota-content.b-cdn.net/app/uplo",
+      "url": "https://kota.co.uk/app/uploads/202",
+      "path": "app/uploads/202",
       "error": "HTTPError: HTTP Error 404: Not Found"
     },
     {
-      "url": "https://kota.co.uk/landing-page/retail/",
-      "path": "landing-page/retail/",
+      "url": "https://kota.co.uk/landing-page/healthcare/",
+      "path": "landing-page/healthcare/",
       "error": "HTTPError: HTTP Error 404: Not Found"
     },
     {
-      "url": "https://kota-content.b-cdn.net/app/uploads/202",
-      "path": "__external__/kota-content.b-cdn.net/app/uploads/202",
+      "url": "https://kota.co.uk/app/uploads/2024/11/Logo-Profile.png",
+      "path": "app/uploads/2024/11/Logo-Profile.png",
       "error": "HTTPError: HTTP Error 404: Not Found"
     },
     {
-      "url": "https://kota.co.uk/_next/static/chunks/app/(home",
-      "path": "_next/static/chunks/app/(home",
+      "url": "https://kota.co.uk/app/uploads/2024/11/Log",
+      "path": "app/uploads/2024/11/Log",
       "error": "HTTPError: HTTP Error 404: Not Found"
-    },
-    {
-      "url": "https://unpkg.com/@splinetool/navmesh-wasm@1.9.37/build/",
-      "path": "__external__/unpkg.com/@splinetool/navmesh-wasm@1.9.37/build/",
-      "error": "IsADirectoryError: [Errno 21] Is a directory: '/home/runner/work/kota/kota/__external__/unpkg.com/@splinetool/navmesh-wasm@1.9.37/build'"
     }
   ],
   "repaired_mp4s": [],
