@@ -1,5 +1,5 @@
 from pathlib import Path
-from urllib.parse import urlsplit, urlunsplit, unquote
+from urllib.parse import urlsplit, urlunsplit, unquote, quote
 from urllib.request import Request, urlopen
 from urllib.error import HTTPError
 import concurrent.futures, hashlib, json, re, shutil, time
@@ -50,7 +50,7 @@ def get(url, out, rsc_req=False):
  p.parent.mkdir(parents=True,exist_ok=True); err=''
  for n in range(4):
   try:
-   with urlopen(Request(url,headers=headers(rsc_req)),timeout=45) as q:
+   u=urlsplit(url); safe=urlunsplit((u.scheme,u.netloc,quote(u.path,safe='/%:@'),quote(u.query,safe='=&%:/?@,+'),''))\n   with urlopen(Request(safe,headers=headers(rsc_req)),timeout=45) as q:
     if q.headers.get('Content-Length') and int(q.headers['Content-Length'])>MAX:raise RuntimeError('too large')
     b=q.read(MAX+1)
    if len(b)>MAX:raise RuntimeError('too large')
@@ -131,7 +131,7 @@ def rewrite(exact):
  pairs=[]
  for a,b in exact.items():
   if (ROOT/b.lstrip('/')).exists():pairs.extend(((a,b),(a.replace('/','\\/'),b.replace('/','\\/'))))
- pairs.sort(key=lambda x:len(x[0]),reverse=True);n=0
+ pairs.extend((('https://unpkg.com/','/__external__/unpkg.com/'),('https://kota-content.b-cdn.net/','/__external__/kota-content.b-cdn.net/'),('https://content.kota.co.uk/','/__external__/kota-content.b-cdn.net/')))\n pairs.sort(key=lambda x:len(x[0]),reverse=True);n=0
  for p in texts():
   if p.as_posix().endswith('__sitecloner/runtime.js'):continue
   s=read(p); old=s
@@ -146,14 +146,14 @@ def runtime(exact):
  (d/'runtime.js').write_text(js,encoding='utf-8');(d/'blocked').write_text('');(d/'empty.js').write_text('');(d/'empty.css').write_text('')
 
 def inject():
- tag='<script src="/__sitecloner/runtime.js"></script>';n=0
+ csp="<meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'self' data: blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; frame-src 'self' blob:; worker-src 'self' blob:; object-src 'none'; base-uri 'self'\">"
+ tag=csp+'<script src="/__sitecloner/runtime.js"></script>';n=0
  for p in ROOT.rglob('*.html'):
   s=read(p)
   if tag in s:continue
-  s=re.sub(r'(<head[^>]*>)',r'\1'+tag,s,count=1,flags=re.I) if re.search(r'<head[^>]*>',s,re.I) else tag+s
+  s=re.sub(r'(<head[^>]*>)',r'\\1'+tag,s,count=1,flags=re.I) if re.search(r'<head[^>]*>',s,re.I) else tag+s
   p.write_text(s,encoding='utf-8');n+=1
  return n
-
 def support():
  (ROOT/'.nojekyll').write_text('')
  (ROOT/'vercel.json').write_text(json.dumps({'cleanUrls':True,'headers':[{'source':'/(.*)','headers':[{'key':'X-Content-Type-Options','value':'nosniff'}]}]},indent=2)+'\n')
