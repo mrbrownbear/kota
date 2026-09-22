@@ -132,7 +132,8 @@ def rewrite(exact):
  pairs=[]
  for a,b in exact.items():
   if (ROOT/b.lstrip('/')).exists():pairs.extend(((a,b),(a.replace('/','\\/'),b.replace('/','\\/'))))
- pairs.extend((('https://unpkg.com/','/__external__/unpkg.com/'),('https://kota-content.b-cdn.net/','/__external__/kota-content.b-cdn.net/'),('https://content.kota.co.uk/','/__external__/kota-content.b-cdn.net/')))\n pairs.sort(key=lambda x:len(x[0]),reverse=True);n=0
+ pairs.extend((('https://unpkg.com/','/__external__/unpkg.com/'),('https://kota-content.b-cdn.net/','/__external__/kota-content.b-cdn.net/'),('https://content.kota.co.uk/','/__external__/kota-content.b-cdn.net/')))
+ pairs.sort(key=lambda x:len(x[0]),reverse=True);n=0
  for p in texts():
   if p.as_posix().endswith('__sitecloner/runtime.js'):continue
   s=read(p); old=s
@@ -156,6 +157,10 @@ def inject():
   p.write_text(s,encoding='utf-8');n+=1
  return n
 def support():
+ aliases={'landing-page/agencies':'agencies','landing-page/b2b-transformation':'b2b-transformation','landing-page/healthcare':'healthcare','landing-page/media-entertainment':'media-entertainment','landing-page/retail':'retail'}
+ for a,b in aliases.items():
+  src=ROOT/b/'index.html'; dst=ROOT/a/'index.html'; dst.parent.mkdir(parents=True,exist_ok=True)
+  if src.exists():shutil.copy2(src,dst)
  (ROOT/'.nojekyll').write_text('')
  (ROOT/'vercel.json').write_text(json.dumps({'cleanUrls':True,'headers':[{'source':'/(.*)','headers':[{'key':'X-Content-Type-Options','value':'nosniff'}]}]},indent=2)+'\n')
  (ROOT/'README.md').write_text('# KOTA local static clone\n\nAll captured site assets are served locally. Unknown external runtime requests are blocked by `__sitecloner/runtime.js`.\n\nRun with `python -m http.server 8000` and open `http://localhost:8000`.\n')
