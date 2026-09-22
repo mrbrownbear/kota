@@ -7687,7 +7687,7 @@ void main() {
 (async function() {
 	const [wasmImport, wasmBinary] = await Promise.all([
 		import('/__external__/unpkg.com/@splinetool/runtime@1.9.37/build/' + 'navmesh.js'),
-		fetch('https://unpkg.com/@splinetool/navmesh-wasm@1.9.37/build/' + 'navmesh.wasm').then((res) => res.arrayBuffer()),
+		fetch('/__external__/unpkg.com/@splinetool/navmesh-wasm@1.9.37/build/' + 'navmesh.wasm').then((res) => res.arrayBuffer()),
 	]);
 	const wasmModule = wasmImport.default;
 	self.module = await wasmModule({ wasmBinary });
