@@ -1,0 +1,38 @@
+name: Rebuild offline KOTA capture
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/rebuild-offline.yml'
+      - 'tools/rebuild.py'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  rebuild:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Rebuild and localize capture
+        run: python tools/rebuild.py
+
+      - name: Commit generated static site
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No generated changes"
+            exit 0
+          fi
+          git commit -m "Build fully local KOTA static capture"
+          git push origin HEAD:main
