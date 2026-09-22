@@ -1,0 +1,135 @@
+{
+  "routes": [
+    "/",
+    "/agencies",
+    "/agency",
+    "/b2b-transformation",
+    "/blog",
+    "/healthcare",
+    "/media-entertainment",
+    "/retail",
+    "/service/brand-strategy-and-identity",
+    "/service/web-design-development",
+    "/work/florence"
+  ],
+  "files": 1901,
+  "bytes": 705841918,
+  "download_failure_count": 19,
+  "download_failures": [
+    {
+      "url": "https://kota-content.b-cdn.net/a",
+      "path": "__external__/kota-content.b-cdn.net/a",
+      "error": "HTTPError: HTTP Error 404: Not Found"
+    },
+    {
+      "url": "https://kota.co.uk/app/uploads/2024/11/Logo-Profile.png",
+      "path": "app/uploads/2024/11/Logo-Profile.png",
+      "error": "HTTPError: HTTP Error 404: Not Found"
+    },
+    {
+      "url": "https://kota-content.b-cdn.net/app/uploads/2023/10/T01-Homepage-B-\u2013-1-1-768x432.jpg",
+      "path": "__external__/kota-content.b-cdn.net/app/uploads/2023/10/T01-Homepage-B-\u2013-1-1-768x432.jpg",
+      "error": "UnicodeEncodeError: 'ascii' codec can't encode character '\\u2013' in position 40: ordinal not in range(128)"
+    },
+    {
+      "url": "https://kota.co.uk/_next/static/chunks/app/(home",
+      "path": "_next/static/chunks/app/(home",
+      "error": "HTTPError: HTTP Error 404: Not Found"
+    },
+    {
+      "url": "https://kota.co.uk/landing-page/b2b-transformation/",
+      "path": "landing-page/b2b-transformation/",
+      "error": "HTTPError: HTTP Error 404: Not Found"
+    },
+    {
+      "url": "https://kota-content.b-cdn.net/app/uploads/2024/02/The-KOTA-Way-Unconventional-Layout-Blog-Header-\u2013-op2.jpg",
+      "path": "__external__/kota-content.b-cdn.net/app/uploads/2024/02/The-KOTA-Way-Unconventional-Layout-Blog-Header-\u2013-op2.jpg",
+      "error": "UnicodeEncodeError: 'ascii' codec can't encode character '\\u2013' in position 72: ordinal not in range(128)"
+    },
+    {
+      "url": "https://kota-content.b-cdn.net/app/uploads/2024/02/The-KOTA-Way-Unconventional-Layout-Blog-Header-\u2013-op2-1536x864.jpg",
+      "path": "__external__/kota-content.b-cdn.net/app/uploads/2024/02/The-KOTA-Way-Unconventional-Layout-Blog-Header-\u2013-op2-1536x864.jpg",
+      "error": "UnicodeEncodeError: 'ascii' codec can't encode character '\\u2013' in position 72: ordinal not in range(128)"
+    },
+    {
+      "url": "https://kota-content.b-cdn.net/app/uploads/2023/10/T01-Homepage-B-\u2013-1-1-500x281.jpg",
+      "path": "__external__/kota-content.b-cdn.net/app/uploads/2023/10/T01-Homepage-B-\u2013-1-1-500x281.jpg",
+      "error": "UnicodeEncodeError: 'ascii' codec can't encode character '\\u2013' in position 40: ordinal not in range(128)"
+    },
+    {
+      "url": "https://kota.co.uk/app/uploads/2024/05/hero.png",
+      "path": "app/uploads/2024/05/hero.png",
+      "error": "HTTPError: HTTP Error 404: Not Found"
+    },
+    {
+      "url": "https://kota.co.uk/landing-page/media-entertainment/",
+      "path": "landing-page/media-entertainment/",
+      "error": "HTTPError: HTTP Error 404: Not Found"
+    },
+    {
+      "url": "https://kota.co.uk/landing-page/agencies/",
+      "path": "landing-page/agencies/",
+      "error": "HTTPError: HTTP Error 404: Not Found"
+    },
+    {
+      "url": "https://kota.co.uk/landing-page/retail/",
+      "path": "landing-page/retail/",
+      "error": "HTTPError: HTTP Error 404: Not Found"
+    },
+    {
+      "url": "https://kota-content.b-cdn.net/app/uploads/2023/10/T01-Homepage-B-\u2013-1-1.jpg",
+      "path": "__external__/kota-content.b-cdn.net/app/uploads/2023/10/T01-Homepage-B-\u2013-1-1.jpg",
+      "error": "UnicodeEncodeError: 'ascii' codec can't encode character '\\u2013' in position 40: ordinal not in range(128)"
+    },
+    {
+      "url": "https://kota-content.b-cdn.net/app/uploads/2024/02/The-KOTA-Way-Unconventional-Layout-Blog-Header-\u2013-op2-1400x788.jpg",
+      "path": "__external__/kota-content.b-cdn.net/app/uploads/2024/02/The-KOTA-Way-Unconventional-Layout-Blog-Header-\u2013-op2-1400x788.jpg",
+      "error": "UnicodeEncodeError: 'ascii' codec can't encode character '\\u2013' in position 72: ordinal not in range(128)"
+    },
+    {
+      "url": "https://kota-content.b-cdn.net/app/uploads/2024/02/The-KOTA-Way-Unconventional-Layout-Blog-Header-\u2013-op2-500x281.jpg",
+      "path": "__external__/kota-content.b-cdn.net/app/uploads/2024/02/The-KOTA-Way-Unconventional-Layout-Blog-Header-\u2013-op2-500x281.jpg",
+      "error": "UnicodeEncodeError: 'ascii' codec can't encode character '\\u2013' in position 72: ordinal not in range(128)"
+    },
+    {
+      "url": "https://kota.co.uk/landing-page/healthcare/",
+      "path": "landing-page/healthcare/",
+      "error": "HTTPError: HTTP Error 404: Not Found"
+    },
+    {
+      "url": "https://kota-content.b-cdn.net/app/uploads/2023/10/T01-Homepage-B-\u2013-1-1-1400x788.jpg",
+      "path": "__external__/kota-content.b-cdn.net/app/uploads/2023/10/T01-Homepage-B-\u2013-1-1-1400x788.jpg",
+      "error": "UnicodeEncodeError: 'ascii' codec can't encode character '\\u2013' in position 40: ordinal not in range(128)"
+    },
+    {
+      "url": "https://kota-content.b-cdn.net/app/uploads/2024/02/The-KOTA-Way-Unconventional-Layout-Blog-Header-\u2013-op2-768x432.jpg",
+      "path": "__external__/kota-content.b-cdn.net/app/uploads/2024/02/The-KOTA-Way-Unconventional-Layout-Blog-Header-\u2013-op2-768x432.jpg",
+      "error": "UnicodeEncodeError: 'ascii' codec can't encode character '\\u2013' in position 72: ordinal not in range(128)"
+    },
+    {
+      "url": "https://kota-content.b-cdn.net/app/uploads/2024/02/huse-fun-500x500",
+      "path": "__external__/kota-content.b-cdn.net/app/uploads/2024/02/huse-fun-500x500",
+      "error": "HTTPError: HTTP Error 404: Not Found"
+    }
+  ],
+  "repaired_mp4s": [],
+  "rewritten_text_files": 23,
+  "runtime_injected_html": 11,
+  "remaining_supported_remote_count": 13,
+  "remaining_supported_remote_urls": [
+    "https://kota-content.b-cdn.net/a",
+    "https://kota-content.b-cdn.net/app/",
+    "https://kota-content.b-cdn.net/app/uploads/2023/10/T01-Homepage-B-\u2013-1-1-1400x788.jpg",
+    "https://kota-content.b-cdn.net/app/uploads/2023/10/T01-Homepage-B-\u2013-1-1-500x281.jpg",
+    "https://kota-content.b-cdn.net/app/uploads/2023/10/T01-Homepage-B-\u2013-1-1-768x432.jpg",
+    "https://kota-content.b-cdn.net/app/uploads/2023/10/T01-Homepage-B-\u2013-1-1.jpg",
+    "https://kota-content.b-cdn.net/app/uploads/2024/02/The-KOTA-Way-Unconventional-Layout-Blog-Header-\u2013-op2-1400x788.jpg",
+    "https://kota-content.b-cdn.net/app/uploads/2024/02/The-KOTA-Way-Unconventional-Layout-Blog-Header-\u2013-op2-1536x864.jpg",
+    "https://kota-content.b-cdn.net/app/uploads/2024/02/The-KOTA-Way-Unconventional-Layout-Blog-Header-\u2013-op2-500x281.jpg",
+    "https://kota-content.b-cdn.net/app/uploads/2024/02/The-KOTA-Way-Unconventional-Layout-Blog-Header-\u2013-op2-768x432.jpg",
+    "https://kota-content.b-cdn.net/app/uploads/2024/02/The-KOTA-Way-Unconventional-Layout-Blog-Header-\u2013-op2.jpg",
+    "https://kota-content.b-cdn.net/app/uploads/2024/02/huse-fun-500x500",
+    "https://unpkg.com/@splinetool/navmesh-wasm@1.9.37/build/"
+  ],
+  "offline_firewall": true
+}
