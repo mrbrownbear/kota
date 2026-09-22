@@ -178,7 +178,32 @@ def audit(fixed,rew,inj):
  a={'routes':ROUTES,'files':len(files),'bytes':sum(p.stat().st_size for p in files),'download_failure_count':len(failed),'download_failures':failed[:200],'repaired_mp4s':fixed,'rewritten_text_files':rew,'runtime_injected_html':inj,'remaining_supported_remote_count':len(remote),'remaining_supported_remote_urls':sorted(remote)[:300],'offline_firewall':True}
  (ROOT/'offline-audit.json').write_text(json.dumps(a,indent=2)+'\n');print(json.dumps(a,indent=2))
 
+def validate_local_runtime():
+ missing=[]
+ attr=re.compile(r'(?:src|href|poster)=[\"\\']([^\"\\']+)[\"\\']',re.I)
+ cssurl=re.compile(r'url\\([\"\\']?([^)\\\"\\']+)[\"\\']?\\)',re.I)
+ for p in ROOT.rglob('*.html'):
+  for u in attr.findall(read(p)):
+   if not u.startswith('/'):continue
+   q=u.split('?',1)[0]
+   if not re.search(r'\\.(?:js|css|mjs|woff2?|ttf|otf|png|jpe?g|webp|gif|svg|mp4|webm|wasm|splinecode|json|bin)
+,q,re.I):continue
+   if not (ROOT/q.lstrip('/')).is_file():missing.append({'file':p.relative_to(ROOT).as_posix(),'ref':u})
+ for p in ROOT.rglob('*.css'):
+  for u in cssurl.findall(read(p)):
+   if not u.startswith('/'):continue
+   q=u.split('?',1)[0]
+   if not (ROOT/q.lstrip('/')).is_file():missing.append({'file':p.relative_to(ROOT).as_posix(),'ref':u})
+ critical=ROOT/'_next/static/chunks/app/(home)'
+ if not critical.exists() or not any(critical.glob('page-*.js')):
+  missing.append({'file':'index.html','ref':'/_next/static/chunks/app/(home)/page-*.js'})
+ (ROOT/'local-runtime-validation.json').write_text(json.dumps({'missing':missing,'count':len(missing)},indent=2)+'\\n')
+ if missing:
+  print(json.dumps({'local_runtime_missing':missing[:100]},indent=2))
+  raise SystemExit(f'local runtime validation failed: {len(missing)} missing assets')
+
 def main():
  wipe();seed();grab_assets();fixed=media_fix();exact=allmaps();rew=rewrite(exact);runtime(exact);inj=inject();support();audit(fixed,rew,inj)
  if not (ROOT/'index.html').exists():raise SystemExit('index missing')
+ validate_local_runtime()
 main()
