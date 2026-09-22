@@ -78,8 +78,8 @@ def read(p):
   try:return p.read_text('utf-8',errors='ignore')
   except:return ''
 
-ABS=re.compile(r'https?://(?:kota\.co\.uk|kota-content\.b-cdn\.net|content\.kota\.co\.uk|unpkg\.com)/[^\\\"\'<>\s)]+',re.I)
-ROOTREF=re.compile(r'(?<![A-Za-z0-9_:])/(?:_next/static|images|matter|app/uploads)/[^\\\"\'<>\s)]+',re.I)
+ABS=re.compile(r'https?://(?:kota\.co\.uk|kota-content\.b-cdn\.net|content\.kota\.co\.uk|unpkg\.com)/[^\\\"\'<>\s]+',re.I)
+ROOTREF=re.compile(r'(?<![A-Za-z0-9_:])/(?:_next/static|images|matter|app/uploads)/[^\\\"\'<>\s]+',re.I)\nROOTASSET=re.compile(r'(?<![A-Za-z0-9_:])/(?:[^\\\"\'<>\s?#]+/)*[^\\\"\'<>\s?#]+\\.(?:js|css|mjs|woff2?|ttf|otf|png|jpe?g|webp|gif|svg|mp4|webm|wasm|splinecode|json|bin)(?:\\?[^\\\"\'<>\s#]*)?',re.I)
 
 def discover():
  out=set()
