@@ -131,16 +131,19 @@ def allmaps():
 def rewrite(exact):
  pairs=[]
  for a,b in exact.items():
+  u=urlsplit(a)
+  if (u.hostname or '').lower()=='kota.co.uk':continue
   if (ROOT/b.lstrip('/')).exists():pairs.extend(((a,b),(a.replace('/','\\/'),b.replace('/','\\/'))))
  pairs.extend((('https://unpkg.com/','/__external__/unpkg.com/'),('https://kota-content.b-cdn.net/','/__external__/kota-content.b-cdn.net/'),('https://content.kota.co.uk/','/__external__/kota-content.b-cdn.net/')))
  pairs.sort(key=lambda x:len(x[0]),reverse=True);n=0
  for p in texts():
   if p.as_posix().endswith('__sitecloner/runtime.js'):continue
   s=read(p); old=s
+  s=s.replace('https://kota.co.uk/','/').replace('http://kota.co.uk/','/')
+  s=s.replace('https:\\/\\/kota.co.uk\\/','\\/').replace('http:\\/\\/kota.co.uk\\/','\\/')
   for a,b in pairs:s=s.replace(a,b)
   if s!=old:p.write_text(s,encoding='utf-8');n+=1
  return n
-
 def runtime(exact):
  d=ROOT/'__sitecloner';d.mkdir(exist_ok=True)
  M=json.dumps(exact,separators=(',',':'));R=json.dumps(rsc,separators=(',',':'))
