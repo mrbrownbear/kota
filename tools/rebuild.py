@@ -180,8 +180,8 @@ def audit(fixed,rew,inj):
 
 def validate_local_runtime():
  missing=[]
- attr=re.compile(r'(?:src|href|poster)=[\"\\']([^\"\\']+)[\"\\']',re.I)
- cssurl=re.compile(r'url\\([\"\\']?([^)\\\"\\']+)[\"\\']?\\)',re.I)
+ attr=re.compile(r\"(?:src|href|poster)=[\\\"']([^\\\"']+)[\\\"']\",re.I)
+ cssurl=re.compile(r\"url\\([\\\"']?([^)\\\"']+)[\\\"']?\\)\",re.I)
  for p in ROOT.rglob('*.html'):
   for u in attr.findall(read(p)):
    if not u.startswith('/'):continue
