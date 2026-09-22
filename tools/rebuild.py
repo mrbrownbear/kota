@@ -7,6 +7,8 @@ SITE = ROOT / "__sitecloner"
 
 TRANSITION_STYLE = 'style="position:fixed;z-index:50;width:100vw;height:100vh;background:#efefef"'
 TRANSITION_STYLE_FIXED = 'style="position:fixed;z-index:50;width:100vw;height:100vh;background:#efefef;clip-path:polygon(0 100%, 100% 100%, 100% 100%, 0 100%);pointer-events:none;opacity:0"'
+TRANSITION_JS = 'style:{position:"fixed",zIndex:50,width:"100vw",height:"100vh",background:"#efefef"}'
+TRANSITION_JS_FIXED = 'style:{position:"fixed",zIndex:50,width:"100vw",height:"100vh",background:"#efefef",clipPath:"polygon(0 100%, 100% 100%, 100% 100%, 0 100%)",pointerEvents:"none",opacity:0}'
 
 
 def read(path):
@@ -15,19 +17,46 @@ def read(path):
 
 def write_support_files():
     SITE.mkdir(exist_ok=True)
-    (SITE / "empty.js").write_text("/* intentionally empty local analytics stub */\n", encoding="utf-8")
+    (SITE / "empty.js").write_text(
+        "window.dataLayer=window.dataLayer||[];window.gtag=window.gtag||function(){window.dataLayer.push(arguments)};\n",
+        encoding="utf-8",
+    )
     (SITE / "runtime.js").write_text(
         '(()=>{"use strict";window.__sitecloner={local:true};})();\n',
         encoding="utf-8",
     )
     (SITE / "fixes.css").write_text(
-        """/* Local clone compatibility fixes. */
-body > div[style*="position:fixed"][style*="z-index:50"][style*="width:100vw"][style*="height:100vh"][style*="background:#efefef"] {
+        """/* Local clone compatibility fixes. Keep the original React DOM unchanged. */
+body > div[style="position:fixed;z-index:50;width:100vw;height:100vh;background:#efefef"] {
   clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%) !important;
   pointer-events: none !important;
   opacity: 0 !important;
   visibility: hidden !important;
 }
+""",
+        encoding="utf-8",
+    )
+    (SITE / "animation-kick.js").write_text(
+        """(()=>{
+  const kick=()=>{
+    try{window.dispatchEvent(new Event('resize'));}catch(e){}
+    try{window.dispatchEvent(new Event('scroll'));}catch(e){}
+  };
+  const run=()=>{
+    kick();
+    requestAnimationFrame(()=>requestAnimationFrame(kick));
+    setTimeout(kick,120);
+    setTimeout(kick,500);
+    setTimeout(kick,1200);
+    if(document.fonts&&document.fonts.ready)document.fonts.ready.then(kick).catch(()=>{});
+    document.querySelectorAll('img,video').forEach(el=>{
+      el.addEventListener('load',kick,{once:true});
+      el.addEventListener('loadedmetadata',kick,{once:true});
+    });
+  };
+  document.readyState==='loading'?document.addEventListener('DOMContentLoaded',run,{once:true}):run();
+  window.addEventListener('load',run,{once:true});
+})();
 """,
         encoding="utf-8",
     )
@@ -41,15 +70,12 @@ def repair_html():
         html = read(path)
         original = html
 
-        # A previous injector replaced the opening head tag with the literal text \1.
+        # Repair the malformed head introduced by the first reconstruction pass.
         html = html.replace(
             '\\1<meta http-equiv="Content-Security-Policy"',
             '<head><meta http-equiv="Content-Security-Policy"',
             1,
         )
-
-        # Remove the old browser monkeypatch and restrictive CSP. Static assets are
-        # already local, so neither is required and both can interfere with hydration.
         html = re.sub(
             r'<meta\s+http-equiv=["\']Content-Security-Policy["\'][^>]*>',
             "",
@@ -62,9 +88,6 @@ def repair_html():
             html,
             flags=re.I,
         )
-
-        # Remove automatic external analytics preloads. Analytics is also neutralised
-        # inside the layout chunk below.
         html = re.sub(
             r'<link\s+rel=["\']preload["\']\s+href=["\']https://www\.googletagmanager\.com/[^"\']+["\']\s+as=["\']script["\']\s*/?>',
             "",
@@ -72,7 +95,6 @@ def repair_html():
             flags=re.I,
         )
 
-        # Guarantee a valid head element even if an older malformed clone is repaired.
         if not re.search(r'<head(?:\s[^>]*)?>', html, flags=re.I):
             html = re.sub(
                 r'(<html[^>]*>)',
@@ -82,16 +104,17 @@ def repair_html():
                 flags=re.I,
             )
 
-        # Hide the SSR route transition curtain immediately. The client chunk is also
-        # patched so React agrees with this state after hydration.
-        html = html.replace(TRANSITION_STYLE, TRANSITION_STYLE_FIXED)
+        # Critical hydration fix: the DOM emitted by React must be byte-for-byte
+        # compatible with the captured SSR markup. Undo the previous inline-style
+        # mutation and use CSS alone to keep the route curtain visually hidden.
+        html = html.replace(TRANSITION_STYLE_FIXED, TRANSITION_STYLE)
 
-        # A tiny stylesheet is enough for a fail-safe without mutating DOM prototypes.
         fixes_tag = '<link rel="stylesheet" href="/__sitecloner/fixes.css" data-local-fix="true"/>'
-        html = html.replace(fixes_tag, "")
+        kick_tag = '<script src="/__sitecloner/animation-kick.js" defer data-local-animation-kick="true"></script>'
+        html = html.replace(fixes_tag, "").replace(kick_tag, "")
         html = re.sub(
             r'(<head(?:\s[^>]*)?>)',
-            lambda m: m.group(1) + fixes_tag,
+            lambda m: m.group(1) + fixes_tag + kick_tag,
             html,
             count=1,
             flags=re.I,
@@ -103,33 +126,33 @@ def repair_html():
     return changed
 
 
-def patch_layout_chunk():
-    chunks = sorted((ROOT / "_next/static/chunks/app").glob("layout-*.js"))
-    if not chunks:
-        raise SystemExit("layout chunk not found")
-
+def patch_all_client_chunks():
     changed = []
+    chunks = list((ROOT / "_next/static/chunks").rglob("*.js"))
+    if not chunks:
+        raise SystemExit("client chunks not found")
+
     for path in chunks:
         js = read(path)
         original = js
 
-        # The original transition curtain starts fully visible and only GSAP hides it
-        # in useEffect. Start it hidden instead, so hydration can never leave a white
-        # full-screen panel over the site.
-        js = js.replace(
-            'style:{position:"fixed",zIndex:50,width:"100vw",height:"100vh",background:"#efefef"}',
-            'style:{position:"fixed",zIndex:50,width:"100vw",height:"100vh",background:"#efefef",clipPath:"polygon(0 100%, 100% 100%, 100% 100%, 0 100%)",pointerEvents:"none",opacity:0}',
-        )
+        # Restore the original React-rendered transition style everywhere. The
+        # fail-safe stylesheet hides it without creating a hydration mismatch.
+        js = js.replace(TRANSITION_JS_FIXED, TRANSITION_JS)
 
-        # Static hosting does not provide the Next server required by client RSC route
-        # transitions. Use normal document navigation so every captured page hydrates
-        # from its own local HTML instead of getting stuck behind the transition curtain.
+        # The same NavigationContext module is duplicated in several chunks. Patch
+        # every copy so asynchronous script order cannot resurrect RSC navigation.
         js = js.replace(
             'i=async e=>{a("PENDING"),n.prefetch(e),setTimeout(()=>{window.scrollTo(0,-100),n.push(e,{scroll:!0})},1e3)}',
             'i=async e=>{window.location.assign(e)}',
         )
+        js = js.replace(
+            's=async e=>{i("PENDING"),n.prefetch(e),setTimeout(()=>{window.scrollTo(0,-100),n.push(e,{scroll:!0})},1e3)}',
+            's=async e=>{window.location.assign(e)}',
+        )
 
-        # Keep analytics from creating live network requests after hydration.
+        # Analytics must remain local, but the local stub defines gtag so consent
+        # effects cannot throw after hydration.
         js = js.replace(
             'https://www.googletagmanager.com/gtag/js?id=',
             '/__sitecloner/empty.js?gtag=',
@@ -147,10 +170,8 @@ def patch_layout_chunk():
 
 def validate():
     problems = []
-    html_files = list(ROOT.rglob("*.html"))
+    html_files = [p for p in ROOT.rglob("*.html") if ".git" not in p.parts]
     for path in html_files:
-        if ".git" in path.parts:
-            continue
         html = read(path)
         rel = path.relative_to(ROOT).as_posix()
         if not re.search(r'<head(?:\s[^>]*)?>', html, flags=re.I):
@@ -161,20 +182,38 @@ def validate():
             problems.append({"file": rel, "issue": "legacy CSP remains"})
         if '<script src="/__sitecloner/runtime.js"></script>' in html:
             problems.append({"file": rel, "issue": "legacy runtime injection remains"})
-        if TRANSITION_STYLE in html:
-            problems.append({"file": rel, "issue": "visible transition curtain remains"})
+        if TRANSITION_STYLE_FIXED in html:
+            problems.append({"file": rel, "issue": "hydration-breaking transition style remains"})
+        if '/__sitecloner/animation-kick.js' not in html:
+            problems.append({"file": rel, "issue": "animation kick missing"})
 
-    layout_files = list((ROOT / "_next/static/chunks/app").glob("layout-*.js"))
-    for path in layout_files:
+    chunk_files = list((ROOT / "_next/static/chunks").rglob("*.js"))
+    stale_transition = []
+    stale_navigation = []
+    for path in chunk_files:
         js = read(path)
-        if 'style:{position:"fixed",zIndex:50,width:"100vw",height:"100vh",background:"#efefef"}' in js:
-            problems.append({"file": path.relative_to(ROOT).as_posix(), "issue": "client transition curtain still starts visible"})
-        if 'https://www.googletagmanager.com/gtag/js?id=' in js or 'https://www.googletagmanager.com/gtm.js?id=' in js:
-            problems.append({"file": path.relative_to(ROOT).as_posix(), "issue": "live analytics URL remains"})
+        rel = path.relative_to(ROOT).as_posix()
+        if TRANSITION_JS_FIXED in js:
+            stale_transition.append(rel)
+        if 'n.prefetch(e),setTimeout(()=>{window.scrollTo(0,-100),n.push(e,{scroll:!0})},1e3)' in js:
+            stale_navigation.append(rel)
+    for rel in stale_transition:
+        problems.append({"file": rel, "issue": "hydration-breaking client transition style remains"})
+    for rel in stale_navigation:
+        problems.append({"file": rel, "issue": "stale Next RSC navigation remains"})
+
+    homepage = ROOT / "_next/static/chunks/app/(home)/page-b58f77e3dc47742c.js"
+    if homepage.exists():
+        h = read(homepage)
+        for marker in ('scrollTrigger:', 'IntersectionObserver', 'SplitText'):
+            if marker not in h:
+                problems.append({"file": homepage.relative_to(ROOT).as_posix(), "issue": f"animation marker missing: {marker}"})
+    else:
+        problems.append({"file": str(homepage.relative_to(ROOT)), "issue": "homepage animation chunk missing"})
 
     report = {
         "html_files_checked": len(html_files),
-        "layout_files_checked": len(layout_files),
+        "client_chunks_checked": len(chunk_files),
         "problem_count": len(problems),
         "problems": problems,
     }
@@ -189,9 +228,9 @@ def validate():
 def main():
     write_support_files()
     html_changed = repair_html()
-    layout_changed = patch_layout_chunk()
+    chunks_changed = patch_all_client_chunks()
     validate()
-    print(json.dumps({"html_changed": html_changed, "layout_changed": layout_changed}, indent=2))
+    print(json.dumps({"html_changed": html_changed, "client_chunks_changed": chunks_changed}, indent=2))
 
 
 if __name__ == "__main__":
