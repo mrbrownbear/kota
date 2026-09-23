@@ -1,14 +1,11 @@
 (()=>{
   const kick=()=>{
-    try{window.dispatchEvent(new Event('resize'));}catch(e){}
     try{window.dispatchEvent(new Event('scroll'));}catch(e){}
   };
   const run=()=>{
     kick();
     requestAnimationFrame(()=>requestAnimationFrame(kick));
-    setTimeout(kick,120);
     setTimeout(kick,500);
-    setTimeout(kick,1200);
     if(document.fonts&&document.fonts.ready)document.fonts.ready.then(kick).catch(()=>{});
     document.querySelectorAll('img,video').forEach(el=>{
       el.addEventListener('load',kick,{once:true});
