@@ -6,6 +6,7 @@ on:
     paths:
       - '.github/workflows/rebuild-offline.yml'
       - 'tools/rebuild.py'
+      - 'tools/animation_repair.py'
   workflow_dispatch:
 
 permissions:
@@ -23,7 +24,9 @@ jobs:
           fetch-depth: 0
 
       - name: Rebuild and localize capture
-        run: python tools/rebuild.py
+        run: |
+          python tools/rebuild.py
+          python tools/animation_repair.py
 
       - name: Commit generated static site
         run: |
