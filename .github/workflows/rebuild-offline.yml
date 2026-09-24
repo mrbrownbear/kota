@@ -6,7 +6,7 @@ on:
     paths:
       - '.github/workflows/rebuild-offline.yml'
       - 'tools/rebuild.py'
-      - 'tools/animation_repair.py'
+      - 'tools/animation_repair.py'\n      - 'tools/restore_local_assets.sh'
   workflow_dispatch:
 
 permissions:
