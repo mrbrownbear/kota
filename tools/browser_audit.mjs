@@ -1,4 +1,5 @@
 // Audit repaired generated build.
+// Audit after local path normalization.
 import { chromium } from "playwright";
 import fs from "node:fs";
 
