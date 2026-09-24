@@ -27,7 +27,7 @@ function discoverRoutes() {
   return [...routes].filter(r => !r.includes("__q_")).slice(0, 80);
 }
 
-const routes = discoverRoutes();
+const preferred = ["/","/agency/","/work/","/culture","/contact","/service/brand-strategy-and-identity/","/service/web-design-development/","/service/growth-marketing/","/b2b-transformation/","/healthcare/","/media-entertainment/","/retail/"];\nconst discovered = new Set(discoverRoutes());\nconst routes = preferred.filter(r => r === "/" || discovered.has(r) || discovered.has(r.replace(/\\/$/,"")) || discovered.has(r + "/"));
 const browser = await chromium.launch({ headless: true });
 const context = await browser.newContext({
   viewport: { width: 1440, height: 1000 },
