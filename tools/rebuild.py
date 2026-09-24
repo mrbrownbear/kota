@@ -151,6 +151,14 @@ def patch_all_client_chunks():
             's=async e=>{window.location.assign(e)}',
         )
 
+        # Minified variable names differ between route chunks. Catch the same
+        # NavigationContext transition regardless of the local identifiers.
+        js = re.sub(
+            r'([A-Za-z_$][\\w$]*)=async e=>\\{[A-Za-z_$][\\w$]*\\("PENDING"\\),[A-Za-z_$][\\w$]*\\.prefetch\\(e\\),setTimeout\\(\\(\\)=>\\{window\\.scrollTo\\(0,-100\\),[A-Za-z_$][\\w$]*\\.push\\(e,\\{scroll:!0\\}\\)\\},1e3\\)\\}',
+            r'\\1=async e=>{window.location.assign(e)}',
+            js,
+        )
+
         # Some route chunks minify the same NavigationContext with different local
         # variable names. Patch known equivalents exactly to avoid broad rewrites.
         js = js.replace(
@@ -202,7 +210,10 @@ def validate():
         rel = path.relative_to(ROOT).as_posix()
         if TRANSITION_JS_FIXED in js:
             stale_transition.append(rel)
-        if 'n.prefetch(e),setTimeout(()=>{window.scrollTo(0,-100),n.push(e,{scroll:!0})},1e3)' in js:
+        if re.search(
+            r'[A-Za-z_$][\\w$]*\\.prefetch\\(e\\),setTimeout\\(\\(\\)=>\\{window\\.scrollTo\\(0,-100\\),[A-Za-z_$][\\w$]*\\.push\\(e,\\{scroll:!0\\}\\)\\},1e3\\)',
+            js,
+        ):
             stale_navigation.append(rel)
     for rel in stale_transition:
         problems.append({"file": rel, "issue": "hydration-breaking client transition style remains"})
