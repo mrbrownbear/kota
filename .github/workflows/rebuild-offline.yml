@@ -42,7 +42,10 @@ jobs:
         run: python tools/sync_local_assets.py
 
       - name: Validate recovered video files
-        run: python tools/verify_media.py
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
+          python tools/verify_media.py
 
       - name: Rebuild and localize capture
         run: |
