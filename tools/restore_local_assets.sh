@@ -35,6 +35,11 @@ fetch_one "_next/static/chunks/app/privacy-policy/page-53ebfa010302763c.js" "htt
 fetch_one "_next/static/chunks/app/start-your-project/page-3f3f314f0c1d89e4.js" "https://kota.co.uk/_next/static/chunks/app/start-your-project/page-3f3f314f0c1d89e4.js"
 fetch_one "_next/static/chunks/app/work/page-5b3919766e28ce0e.js" "https://kota.co.uk/_next/static/chunks/app/work/page-5b3919766e28ce0e.js"
 
+fetch_one "_next/static/css/77de916f6379b329.css" "https://kota.co.uk/_next/static/css/77de916f6379b329.css"
+fetch_one "_next/static/css/435828e364f4b5ed.css" "https://kota.co.uk/_next/static/css/435828e364f4b5ed.css"
+fetch_one "_next/static/css/d7552b378bb64018.css" "https://kota.co.uk/_next/static/css/d7552b378bb64018.css"
+fetch_one "_next/static/css/decc77e58f025ef8.css" "https://kota.co.uk/_next/static/css/decc77e58f025ef8.css"
+
 if [ -f "__external__/unpkg.com/@splinetool/runtime@1.9.37/build" ]; then
   rm -f "__external__/unpkg.com/@splinetool/runtime@1.9.37/build"
 fi
@@ -80,7 +85,7 @@ replacements = [
     ("https://snap.licdn.com/li.lms-analytics/insight.min.js", "/__sitecloner/empty.js?linkedin=1"),
     ("/prod.spline.design/4asLCgiJDMkz7HAN/scene.splinecode",
      "/__external__/prod.spline.design/4asLCgiJDMkz7HAN/scene.splinecode"),
-    ("/kota-content.b-cdn.net/app/uploads/", "/__external__/kota-content.b-cdn.net/app/uploads/"),
+    ("/__external__/__external__/", "/__external__/"),
 ]
 changed = 0
 for p in root.rglob("*"):
@@ -108,6 +113,10 @@ required=(
   "_next/static/chunks/2827-f8fce45e8c1f0443.js"
   "_next/static/chunks/app/contact/page-66896fc7dbdb22ec.js"
   "_next/static/chunks/app/culture/page-580d954c7a372e0a.js"
+  "_next/static/css/77de916f6379b329.css"
+  "_next/static/css/435828e364f4b5ed.css"
+  "_next/static/css/d7552b378bb64018.css"
+  "_next/static/css/decc77e58f025ef8.css"
   "__external__/unpkg.com/@splinetool/runtime@1.9.37/build/navmesh.js"
   "__external__/prod.spline.design/4asLCgiJDMkz7HAN/scene.splinecode"
   "lottie/brand-pulse-outlines.json"
