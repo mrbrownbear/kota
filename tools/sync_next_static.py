@@ -10,6 +10,10 @@ import re
 
 ROOT = Path(__file__).resolve().parents[1]
 TEXT_SUFFIXES = {".html", ".htm", ".js", ".mjs", ".css", ".json", ".bin", ".txt", ""}
+STATIC_SUFFIXES = {
+    ".css", ".js", ".mjs", ".woff", ".woff2", ".ttf", ".otf",
+    ".png", ".jpg", ".jpeg", ".webp", ".svg", ".gif", ".wasm", ".json"
+}
 PATTERN = re.compile(r'(?<![A-Za-z0-9])(?P<path>/_next/static/(?:css|chunks|media)/[^\s"\'<>\\)]+)')
 
 def iter_text():
@@ -35,12 +39,20 @@ def refs():
         for m in PATTERN.finditer(text):
             path = m.group("path").split("?", 1)[0].split("#", 1)[0]
             path = unquote(path)
-            if ".." not in Path(path).parts:
-                out.add(path)
+            if ".." in Path(path).parts:
+                continue
+            if Path(path).suffix.lower() not in STATIC_SUFFIXES:
+                continue
+            out.add(path)
     return out
 
 def valid(p: Path):
-    return p.is_file() and p.stat().st_size > 0
+    if not p.is_file():
+        return False
+    # Next can emit intentionally empty CSS chunks. Their presence is valid.
+    if p.suffix.lower() == ".css":
+        return True
+    return p.stat().st_size > 0
 
 def fetch(path: str):
     dest = ROOT / path.lstrip("/")
