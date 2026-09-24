@@ -24,6 +24,9 @@ fetch_one() {
   return 1
 }
 
+# Restore public assets referenced by hydrated routes.
+fetch_one "images/GPTW-Certificate.svg" "https://kota.co.uk/images/GPTW-Certificate.svg"
+
 # Restore clean route documents that were absent from the original capture.
 fetch_one "work/index.html" "https://kota.co.uk/work/"
 fetch_one "start-your-project/index.html" "https://kota.co.uk/start-your-project/"
