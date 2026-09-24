@@ -9,6 +9,8 @@ on:
       - 'tools/animation_repair.py'
       - 'tools/restore_local_assets.sh'
       - 'tools/sync_local_assets.py'
+      - 'tools/sync_next_static.py'
+      - 'tools/browser_audit.mjs'
   workflow_dispatch:
 
 permissions:
@@ -25,8 +27,11 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Restore missing local runtime assets
+      - name: Restore route and runtime assets
         run: bash tools/restore_local_assets.sh
+
+      - name: Restore referenced Next static files
+        run: python tools/sync_next_static.py
 
       - name: Verify every referenced visual and media asset
         run: python tools/sync_local_assets.py
@@ -36,7 +41,29 @@ jobs:
           python tools/rebuild.py
           python tools/animation_repair.py
 
-      - name: Commit generated static site
+      - name: Install Chromium audit runtime
+        run: |
+          npm install --no-save --package-lock=false playwright@1.55.0
+          npx playwright install --with-deps chromium
+
+      - name: Run rendered offline audit
+        run: |
+          node server.mjs > /tmp/kota-server.log 2>&1 &
+          echo $! > /tmp/kota-server.pid
+          for i in {1..30}; do
+            curl -fsS http://127.0.0.1:8000/ >/dev/null && break
+            sleep 1
+          done
+          node tools/browser_audit.mjs
+
+      - name: Clean audit dependencies
+        if: always()
+        run: |
+          rm -rf node_modules
+          rm -f package-lock.json
+          test ! -f /tmp/kota-server.pid || kill "$(cat /tmp/kota-server.pid)" 2>/dev/null || true
+
+      - name: Commit verified local site
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -45,5 +72,5 @@ jobs:
             echo "No generated changes"
             exit 0
           fi
-          git commit -m "Build fully local KOTA static capture"
+          git commit -m "Build verified fully local KOTA capture"
           git push origin HEAD:main
