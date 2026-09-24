@@ -22,7 +22,7 @@
       "error": "HTTPError: HTTP Error 404: Not Found"
     },
     {
-      "url": "https://kota.co.uk/lottie/brand-pulse-outlines.js",
+      "url": "/lottie/brand-pulse-outlines.js",
       "path": "lottie/brand-pulse-outlines.js",
       "error": "HTTPError: HTTP Error 404: Not Found"
     },
@@ -37,7 +37,7 @@
       "error": "HTTPError: HTTP Error 404: Not Found"
     },
     {
-      "url": "https://kota.co.uk/prod.spline.design/4asLCgiJDMkz7HAN/scene.splinecode",
+      "url": "https://kota.co.uk/__external__/prod.spline.design/4asLCgiJDMkz7HAN/scene.splinecode",
       "path": "prod.spline.design/4asLCgiJDMkz7HAN/scene.splinecode",
       "error": "HTTPError: HTTP Error 404: Not Found"
     },
@@ -52,32 +52,32 @@
       "error": "HTTPError: HTTP Error 404: Not Found"
     },
     {
-      "url": "https://kota-content.b-cdn.net/app/uploads/2024/02/The-KOTA-Way-Unconventional-Layout-Blog-Header-",
-      "path": "__external__/kota-content.b-cdn.net/app/uploads/2024/02/The-KOTA-Way-Unconventional-Layout-Blog-Header-",
+      "url": "/__external__/__external__/kota-content.b-cdn.net/app/uploads/2024/02/The-KOTA-Way-Unconventional-Layout-Blog-Header-",
+      "path": "__external__/__external__/kota-content.b-cdn.net/app/uploads/2024/02/The-KOTA-Way-Unconventional-Layout-Blog-Header-",
       "error": "HTTPError: HTTP Error 404: Not Found"
     },
     {
-      "url": "https://kota-content.b-cdn.net/app/uplo",
+      "url": "/__external__/kota-content.b-cdn.net/app/uplo",
       "path": "__external__/kota-content.b-cdn.net/app/uplo",
       "error": "HTTPError: HTTP Error 404: Not Found"
     },
     {
-      "url": "https://kota-content.b-cdn.net/app/uploads/2023/10/T01-Homepage-B-",
-      "path": "__external__/kota-content.b-cdn.net/app/uploads/2023/10/T01-Homepage-B-",
+      "url": "/__external__/__external__/kota-content.b-cdn.net/app/uploads/2023/10/T01-Homepage-B-",
+      "path": "__external__/__external__/kota-content.b-cdn.net/app/uploads/2023/10/T01-Homepage-B-",
       "error": "HTTPError: HTTP Error 404: Not Found"
     },
     {
-      "url": "https://kota-content.b-cdn.net/app/uploads/202",
-      "path": "__external__/kota-content.b-cdn.net/app/uploads/202",
+      "url": "/__external__/__external__/kota-content.b-cdn.net/app/uploads/202",
+      "path": "__external__/__external__/kota-content.b-cdn.net/app/uploads/202",
       "error": "HTTPError: HTTP Error 404: Not Found"
     },
     {
-      "url": "https://content.kota.co.uk/app/uploads/2023/10/T01-Homepage-B-",
+      "url": "/__external__/content.kota.co.uk/app/uploads/2023/10/T01-Homepage-B-",
       "path": "__external__/content.kota.co.uk/app/uploads/2023/10/T01-Homepage-B-",
       "error": "HTTPError: HTTP Error 404: Not Found"
     },
     {
-      "url": "https://kota.co.uk/_next/static/chunks/app/(home",
+      "url": "/_next/static/chunks/app/(home",
       "path": "_next/static/chunks/app/(home",
       "error": "HTTPError: HTTP Error 404: Not Found"
     },
@@ -87,12 +87,12 @@
       "error": "HTTPError: HTTP Error 404: Not Found"
     },
     {
-      "url": "https://kota.co.uk/kota-content.b-cdn.net/app/uploads/2024/02/team-piper2.jpg",
+      "url": "https://kota.co.uk/__external__/kota-content.b-cdn.net/app/uploads/2024/02/team-piper2.jpg",
       "path": "kota-content.b-cdn.net/app/uploads/2024/02/team-piper2.jpg",
       "error": "HTTPError: HTTP Error 404: Not Found"
     },
     {
-      "url": "https://content.kota.co.uk/app/uploads/2024/02/The-KOTA-Way-Unconventional-Layout-Blog-Header-",
+      "url": "/__external__/content.kota.co.uk/app/uploads/2024/02/The-KOTA-Way-Unconventional-Layout-Blog-Header-",
       "path": "__external__/content.kota.co.uk/app/uploads/2024/02/The-KOTA-Way-Unconventional-Layout-Blog-Header-",
       "error": "HTTPError: HTTP Error 404: Not Found"
     },
