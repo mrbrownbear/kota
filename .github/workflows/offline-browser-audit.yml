@@ -1,0 +1,59 @@
+name: Offline browser audit
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/offline-browser-audit.yml'
+      - 'tools/browser_audit.mjs'
+      - 'server.mjs'
+      - 'vercel.json'
+      - '__sitecloner/**'
+      - '_next/**'
+      - '*.html'
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install browser
+        run: |
+          npm install --no-save playwright@1.55.0
+          npx playwright install --with-deps chromium
+
+      - name: Start local server
+        run: |
+          node server.mjs > /tmp/kota-server.log 2>&1 &
+          echo $! > /tmp/kota-server.pid
+          for i in {1..30}; do
+            curl -fsS http://127.0.0.1:8000/ >/dev/null && break
+            sleep 1
+          done
+          curl -fsS http://127.0.0.1:8000/ >/dev/null
+
+      - name: Audit rendered site offline
+        run: node tools/browser_audit.mjs
+
+      - name: Print server log
+        if: always()
+        run: cat /tmp/kota-server.log || true
+
+      - name: Upload audit report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: kota-offline-browser-audit
+          path: offline-browser-audit.json
