@@ -13,6 +13,12 @@ import time
 ROOT = Path(__file__).resolve().parents[1]
 HOSTS = ("kota-content.b-cdn.net", "content.kota.co.uk")
 TEXT_SUFFIXES = {".html", ".htm", ".js", ".mjs", ".css", ".json", ".bin", ".txt", ""}
+ASSET_SUFFIXES = {
+    ".jpg", ".jpeg", ".png", ".gif", ".webp", ".svg",
+    ".mp4", ".m4v", ".mov", ".webm",
+    ".woff", ".woff2", ".ttf", ".otf",
+    ".json", ".lottie", ".wasm"
+}
 PATTERN = re.compile(
     r'(?:https?:)?//(?P<host>kota-content\.b-cdn\.net|content\.kota\.co\.uk)/(?P<path>[^\s"\'<>\\)]+)',
     re.I,
@@ -46,6 +52,8 @@ def normalize_ref(host: str, path: str):
     path = path.split("#", 1)[0].split("?", 1)[0]
     path = unquote(path).lstrip("/")
     if not path or ".." in Path(path).parts:
+        return None
+    if Path(path).suffix.lower() not in ASSET_SUFFIXES:
         return None
     return host.lower(), path
 
