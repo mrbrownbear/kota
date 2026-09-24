@@ -151,6 +151,15 @@ def patch_all_client_chunks():
             's=async e=>{window.location.assign(e)}',
         )
 
+        # Some route chunks minify the same NavigationContext with different local
+        # variable names. Patch that exact behavior generically while preserving
+        # unrelated router usage.
+        js = re.sub(
+            r'([A-Za-z_$][A-Za-z0-9_$]*)=async e=>\\{[A-Za-z_$][A-Za-z0-9_$]*\\("PENDING"\\),n\\.prefetch\\(e\\),setTimeout\\(\\(\\)=>\\{window\\.scrollTo\\(0,-100\\),n\\.push\\(e,\\{scroll:!0\\}\\)\\},1e3\\)\\}',
+            r'\\1=async e=>{window.location.assign(e)}',
+            js,
+        )
+
         # Analytics must remain local, but the local stub defines gtag so consent
         # effects cannot throw after hydration.
         js = js.replace(
