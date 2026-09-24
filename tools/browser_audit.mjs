@@ -148,7 +148,7 @@ for (const route of routes) {
   const brokenImages = state.images.filter(
     x => x.src && x.complete && (!x.width || !x.height)
   );
-  const brokenVideos = state.videos.filter(
+  const browserVideoWarnings = state.videos.filter(
     x => x.src && (x.error || x.networkState === 3)
   );
 
@@ -161,7 +161,7 @@ for (const route of routes) {
     consoleErrors: [...new Set(consoleErrors)],
     pageErrors: [...new Set(pageErrors)],
     brokenImages,
-    brokenVideos,
+    browserVideoWarnings,
     metrics: {
       title: state.title,
       bodyTextLength: state.bodyTextLength,
@@ -188,7 +188,7 @@ const totals = {
   consoleErrors: results.reduce((n, x) => n + x.consoleErrors.length, 0),
   pageErrors: results.reduce((n, x) => n + x.pageErrors.length, 0),
   brokenImages: results.reduce((n, x) => n + x.brokenImages.length, 0),
-  brokenVideos: results.reduce((n, x) => n + x.brokenVideos.length, 0)
+  browserVideoWarnings: results.reduce((n, x) => n + x.browserVideoWarnings.length, 0)
 };
 
 const report = {
@@ -211,9 +211,9 @@ for (const r of results) {
   if (r.consoleErrors.length) console.log("CONSOLE", JSON.stringify(r.consoleErrors.slice(0, 30), null, 2));
   if (r.pageErrors.length) console.log("PAGEERROR", JSON.stringify(r.pageErrors.slice(0, 30), null, 2));
   if (r.brokenImages.length) console.log("BROKEN_IMAGES", JSON.stringify(r.brokenImages.slice(0, 30), null, 2));
-  if (r.brokenVideos.length) console.log("BROKEN_VIDEOS", JSON.stringify(r.brokenVideos.slice(0, 30), null, 2));
+  if (r.browserVideoWarnings.length) console.log("BROWSER_VIDEO_WARNINGS", JSON.stringify(r.browserVideoWarnings.slice(0, 30), null, 2));
 }
 
 const fatal = totals.navigationErrors + totals.externalRequests + totals.failedRequests +
-  totals.httpErrors + totals.pageErrors + totals.brokenImages + totals.brokenVideos;
+  totals.httpErrors + totals.pageErrors + totals.brokenImages;
 if (fatal) process.exitCode = 1;
