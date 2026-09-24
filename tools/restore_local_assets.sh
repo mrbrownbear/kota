@@ -35,6 +35,10 @@ fetch_one "_next/static/chunks/app/privacy-policy/page-53ebfa010302763c.js" "htt
 fetch_one "_next/static/chunks/app/start-your-project/page-3f3f314f0c1d89e4.js" "https://kota.co.uk/_next/static/chunks/app/start-your-project/page-3f3f314f0c1d89e4.js"
 fetch_one "_next/static/chunks/app/work/page-5b3919766e28ce0e.js" "https://kota.co.uk/_next/static/chunks/app/work/page-5b3919766e28ce0e.js"
 
+if [ -f "__external__/unpkg.com/@splinetool/runtime@1.9.37/build" ]; then
+  rm -f "__external__/unpkg.com/@splinetool/runtime@1.9.37/build"
+fi
+mkdir -p "__external__/unpkg.com/@splinetool/runtime@1.9.37/build"
 fetch_one "__external__/unpkg.com/@splinetool/runtime@1.9.37/build/navmesh.js" "https://unpkg.com/@splinetool/runtime@1.9.37/build/navmesh.js"
 fetch_one "__external__/prod.spline.design/4asLCgiJDMkz7HAN/scene.splinecode" "https://prod.spline.design/4asLCgiJDMkz7HAN/scene.splinecode"
 fetch_one "lottie/brand-pulse-outlines.json" "https://kota.co.uk/lottie/brand-pulse-outlines.json"
@@ -44,8 +48,8 @@ cp "__external__/unpkg.com/@splinetool/runtime@1.9.37/build/navmesh.js" "_librar
 cp "__external__/unpkg.com/@splinetool/navmesh-wasm@1.9.37/build/navmesh.wasm" "_libraries/navmesh.wasm"
 
 fetch_one "__external__/kota-content.b-cdn.net/app/uploads/2024/02/team-piper2.jpg" "https://kota-content.b-cdn.net/app/uploads/2024/02/team-piper2.jpg"
-fetch_one "__external__/content.kota.co.uk/app/uploads/2024/05/hero.png" "https://content.kota.co.uk/app/uploads/2024/05/hero.png" "https://kota-content.b-cdn.net/app/uploads/2024/05/hero.png"
-fetch_one "__external__/content.kota.co.uk/app/uploads/2024/11/Logo-Profile.png" "https://content.kota.co.uk/app/uploads/2024/11/Logo-Profile.png" "https://kota-content.b-cdn.net/app/uploads/2024/11/Logo-Profile.png"
+fetch_one "__external__/content.kota.co.uk/app/uploads/2024/05/hero.png" "https://content.kota.co.uk/app/uploads/2024/05/hero.png" "https://kota-content.b-cdn.net/app/uploads/2024/05/hero.png" || true
+fetch_one "__external__/content.kota.co.uk/app/uploads/2024/11/Logo-Profile.png" "https://content.kota.co.uk/app/uploads/2024/11/Logo-Profile.png" "https://kota-content.b-cdn.net/app/uploads/2024/11/Logo-Profile.png" || true
 
 mkdir -p "_assets/_videos"
 python - <<'PY'
@@ -69,6 +73,11 @@ replacements = [
     ("https://content.kota.co.uk/", "/__external__/content.kota.co.uk/"),
     ("https://kota.co.uk/_next/", "/_next/"),
     ("https://kota.co.uk/lottie/", "/lottie/"),
+    ("https://www.googletagmanager.com/gtag/js?id=", "/__sitecloner/empty.js?gtag="),
+    ("https://www.googletagmanager.com/gtm.js?id=", "/__sitecloner/empty.js?gtm="),
+    ("https://static.hotjar.com/c/hotjar-", "/__sitecloner/empty.js?hotjar="),
+    ("https://connect.facebook.net/en_US/fbevents.js", "/__sitecloner/empty.js?facebook=1"),
+    ("https://snap.licdn.com/li.lms-analytics/insight.min.js", "/__sitecloner/empty.js?linkedin=1"),
     ("/prod.spline.design/4asLCgiJDMkz7HAN/scene.splinecode",
      "/__external__/prod.spline.design/4asLCgiJDMkz7HAN/scene.splinecode"),
     ("/kota-content.b-cdn.net/app/uploads/", "/__external__/kota-content.b-cdn.net/app/uploads/"),
