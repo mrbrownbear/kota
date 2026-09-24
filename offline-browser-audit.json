@@ -1,0 +1,1623 @@
+{
+  "generatedAt": "2026-09-24T16:34:41.229Z",
+  "base": "http://127.0.0.1:8000",
+  "routesChecked": 16,
+  "totals": {
+    "navigationErrors": 0,
+    "externalRequests": 0,
+    "failedRequests": 0,
+    "httpErrors": 0,
+    "consoleErrors": 0,
+    "pageErrors": 0,
+    "brokenImages": 0,
+    "browserVideoWarnings": 43
+  },
+  "results": [
+    {
+      "route": "/",
+      "navigationError": null,
+      "external": [],
+      "failed": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "brokenImages": [],
+      "browserVideoWarnings": [
+        {
+          "src": "http://127.0.0.1:8000/__external__/kota-content.b-cdn.net/app/uploads/2025/04/Featured2-Compressed.mp4",
+          "readyState": 0,
+          "networkState": 3,
+          "error": {
+            "code": 4,
+            "message": "DEMUXER_ERROR_NO_SUPPORTED_STREAMS: FFmpegDemuxer: no supported streams"
+          }
+        },
+        {
+          "src": "http://127.0.0.1:8000/__external__/kota-content.b-cdn.net/app/uploads/2026/07/Copper-Feature-V3.mp4",
+          "readyState": 0,
+          "networkState": 3,
+          "error": {
+            "code": 4,
+            "message": "DEMUXER_ERROR_NO_SUPPORTED_STREAMS: FFmpegDemuxer: no supported streams"
+          }
+        },
+        {
+          "src": "http://127.0.0.1:8000/__external__/kota-content.b-cdn.net/app/uploads/2026/06/Featured-Video.mp4",
+          "readyState": 0,
+          "networkState": 3,
+          "error": {
+            "code": 4,
+            "message": "DEMUXER_ERROR_NO_SUPPORTED_STREAMS: FFmpegDemuxer: no supported streams"
+          }
+        },
+        {
+          "src": "http://127.0.0.1:8000/__external__/kota-content.b-cdn.net/app/uploads/2026/01/Finura_Logo_Animation.mp4",
+          "readyState": 0,
+          "networkState": 3,
+          "error": {
+            "code": 4,
+            "message": "DEMUXER_ERROR_NO_SUPPORTED_STREAMS: FFmpegDemuxer: no supported streams"
+          }
+        },
+        {
+          "src": "http://127.0.0.1:8000/__external__/kota-content.b-cdn.net/app/uploads/2025/08/GOAT-FeatureVideo.mp4",
+          "readyState": 0,
+          "networkState": 3,
+          "error": {
+            "code": 4,
+            "message": "DEMUXER_ERROR_NO_SUPPORTED_STREAMS: FFmpegDemuxer: no supported streams"
+          }
+        }
+      ],
+      "metrics": {
+        "title": "Branding & Web Design Agency London & NYC | Creative Agency",
+        "bodyTextLength": 9105,
+        "imageCount": 66,
+        "videoCount": 14,
+        "canvasCount": 0,
+        "animationCount": 9,
+        "activeAnimationCount": 9,
+        "canvases": [],
+        "hero": [
+          {
+            "tag": "SECTION",
+            "cls": "Hero_hero__IrR3f",
+            "opacity": "1",
+            "transform": "none",
+            "width": 1440,
+            "height": 1000
+          },
+          {
+            "tag": "DIV",
+            "cls": "Hero_splitText__diMTw",
+            "opacity": "1",
+            "transform": "none",
+            "width": 1121,
+            "height": 668.375
+          },
+          {
+            "tag": "g",
+            "cls": "rebelLetters",
+            "opacity": "0",
+            "transform": "none",
+            "width": 579.5509033203125,
+            "height": 163.5560302734375
+          },
+          {
+            "tag": "g",
+            "cls": "againstLetters",
+            "opacity": "0",
+            "transform": "none",
+            "width": 879.322021484375,
+            "height": 226.56765747070312
+          },
+          {
+            "tag": "g",
+            "cls": "boringLetters",
+            "opacity": "0",
+            "transform": "none",
+            "width": 758.198486328125,
+            "height": 227.15582275390625
+          },
+          {
+            "tag": "svg",
+            "cls": "Hero_mobile__VkWXK",
+            "opacity": "1",
+            "transform": "none",
+            "width": 0,
+            "height": 0
+          },
+          {
+            "tag": "H1",
+            "cls": "Hero_introText__wboFn",
+            "opacity": "1",
+            "transform": "matrix(1, 0, 0, 1, 67.2594, -53.9688)",
+            "width": 336.296875,
+            "height": 107.9375
+          },
+          {
+            "tag": "DIV",
+            "cls": "Hero_logos__jC9k_",
+            "opacity": "1",
+            "transform": "none",
+            "width": 1360,
+            "height": 44.0625
+          },
+          {
+            "tag": "DIV",
+            "cls": "Hero_logosInner__D4sWL",
+            "opacity": "1",
+            "transform": "none",
+            "width": 1360,
+            "height": 37.0625
+          }
+        ]
+      }
+    },
+    {
+      "route": "/work/",
+      "navigationError": null,
+      "external": [],
+      "failed": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "brokenImages": [],
+      "browserVideoWarnings": [
+        {
+          "src": "http://127.0.0.1:8000/__external__/kota-content.b-cdn.net/app/uploads/2025/10/Short-Preview-homepage.mp4",
+          "readyState": 0,
+          "networkState": 3,
+          "error": {
+            "code": 4,
+            "message": "DEMUXER_ERROR_NO_SUPPORTED_STREAMS: FFmpegDemuxer: no supported streams"
+          }
+        },
+        {
+          "src": "http://127.0.0.1:8000/__external__/kota-content.b-cdn.net/app/uploads/2026/08/opt2-video.mp4",
+          "readyState": 0,
+          "networkState": 3,
+          "error": {
+            "code": 4,
+            "message": "DEMUXER_ERROR_NO_SUPPORTED_STREAMS: FFmpegDemuxer: no supported streams"
+          }
+        },
+        {
+          "src": "http://127.0.0.1:8000/__external__/kota-content.b-cdn.net/app/uploads/2025/09/Company-Loop4-compressed-2.mp4",
+          "readyState": 0,
+          "networkState": 3,
+          "error": {
+            "code": 4,
+            "message": "DEMUXER_ERROR_NO_SUPPORTED_STREAMS: FFmpegDemuxer: no supported streams"
+          }
+        },
+        {
+          "src": "http://127.0.0.1:8000/__external__/kota-content.b-cdn.net/app/uploads/2025/04/Featured2-Compressed.mp4",
+          "readyState": 0,
+          "networkState": 3,
+          "error": {
+            "code": 4,
+            "message": "DEMUXER_ERROR_NO_SUPPORTED_STREAMS: FFmpegDemuxer: no supported streams"
+          }
+        },
+        {
+          "src": "http://127.0.0.1:8000/__external__/kota-content.b-cdn.net/app/uploads/2026/07/Copper-Feature-V3.mp4",
+          "readyState": 0,
+          "networkState": 3,
+          "error": {
+            "code": 4,
+            "message": "DEMUXER_ERROR_NO_SUPPORTED_STREAMS: FFmpegDemuxer: no supported streams"
+          }
+        },
+        {
+          "src": "http://127.0.0.1:8000/__external__/kota-content.b-cdn.net/app/uploads/2026/06/Featured-Video.mp4",
+          "readyState": 0,
+          "networkState": 3,
+          "error": {
+            "code": 4,
+            "message": "DEMUXER_ERROR_NO_SUPPORTED_STREAMS: FFmpegDemuxer: no supported streams"
+          }
+        },
+        {
+          "src": "http://127.0.0.1:8000/__external__/kota-content.b-cdn.net/app/uploads/2026/01/Finura_Logo_Animation.mp4",
+          "readyState": 0,
+          "networkState": 3,
+          "error": {
+            "code": 4,
+            "message": "DEMUXER_ERROR_NO_SUPPORTED_STREAMS: FFmpegDemuxer: no supported streams"
+          }
+        },
+        {
+          "src": "http://127.0.0.1:8000/__external__/kota-content.b-cdn.net/app/uploads/2025/09/Featured-compressed.mp4",
+          "readyState": 0,
+          "networkState": 3,
+          "error": {
+            "code": 4,
+            "message": "DEMUXER_ERROR_NO_SUPPORTED_STREAMS: FFmpegDemuxer: no supported streams"
+          }
+        },
+        {
+          "src": "http://127.0.0.1:8000/__external__/kota-content.b-cdn.net/app/uploads/2025/08/GOAT-FeatureVideo.mp4",
+          "readyState": 0,
+          "networkState": 3,
+          "error": {
+            "code": 4,
+            "message": "DEMUXER_ERROR_NO_SUPPORTED_STREAMS: FFmpegDemuxer: no supported streams"
+          }
+        },
+        {
+          "src": "http://127.0.0.1:8000/__external__/kota-content.b-cdn.net/app/uploads/2025/02/isi-vid2-1.mp4",
+          "readyState": 0,
+          "networkState": 3,
+          "error": {
+            "code": 4,
+            "message": "DEMUXER_ERROR_NO_SUPPORTED_STREAMS: FFmpegDemuxer: no supported streams"
+          }
+        },
+        {
+          "src": "http://127.0.0.1:8000/__external__/kota-content.b-cdn.net/app/uploads/2025/04/Duplicated-Assets.mp4",
+          "readyState": 0,
+          "networkState": 3,
+          "error": {
+            "code": 4,
+            "message": "DEMUXER_ERROR_NO_SUPPORTED_STREAMS: FFmpegDemuxer: no supported streams"
+          }
+        },
+        {
+          "src": "http://127.0.0.1:8000/__external__/kota-content.b-cdn.net/app/uploads/2024/01/tangerine-thumbnail2.mp4",
+          "readyState": 0,
+          "networkState": 3,
+          "error": {
+            "code": 4,
+            "message": "DEMUXER_ERROR_NO_SUPPORTED_STREAMS: FFmpegDemuxer: no supported streams"
+          }
+        },
+        {
+          "src": "http://127.0.0.1:8000/__external__/kota-content.b-cdn.net/app/uploads/2024/04/bellsant-thumbnail-compressed.mp4",
+          "readyState": 0,
+          "networkState": 3,
+          "error": {
+            "code": 4,
+            "message": "DEMUXER_ERROR_NO_SUPPORTED_STREAMS: FFmpegDemuxer: no supported streams"
+          }
+        },
+        {
+          "src": "http://127.0.0.1:8000/__external__/kota-content.b-cdn.net/app/uploads/2023/10/BMS-Homepage-Hero.mp4",
+          "readyState": 0,
+          "networkState": 3,
+          "error": {
+            "code": 4,
+            "message": "DEMUXER_ERROR_NO_SUPPORTED_STREAMS: FFmpegDemuxer: no supported streams"
+          }
+        },
+        {
+          "src": "http://127.0.0.1:8000/__external__/kota-content.b-cdn.net/app/uploads/2024/04/sym-thumbnail-compressed.mp4",
+          "readyState": 0,
+          "networkState": 3,
+          "error": {
+            "code": 4,
+            "message": "DEMUXER_ERROR_NO_SUPPORTED_STREAMS: FFmpegDemuxer: no supported streams"
+          }
+        },
+        {
+          "src": "http://127.0.0.1:8000/__external__/kota-content.b-cdn.net/app/uploads/2024/04/pw-thumbnail-compressed.mp4",
+          "readyState": 0,
+          "networkState": 3,
+          "error": {
+            "code": 4,
+            "message": "DEMUXER_ERROR_NO_SUPPORTED_STREAMS: FFmpegDemuxer: no supported streams"
+          }
+        }
+      ],
+      "metrics": {
+        "title": "Our Work | Web Design Portfolio | KOTA Creative Agency",
+        "bodyTextLength": 4089,
+        "imageCount": 28,
+        "videoCount": 16,
+        "canvasCount": 1,
+        "animationCount": 2,
+        "activeAnimationCount": 2,
+        "canvases": [
+          {
+            "width": 1440,
+            "height": 1000,
+            "rect": {
+              "width": 1440,
+              "height": 1000
+            }
+          }
+        ],
+        "hero": [
+          {
+            "tag": "SECTION",
+            "cls": "Hero_hero__Oyf4n",
+            "opacity": "1",
+            "transform": "none",
+            "width": 1440,
+            "height": 1000
+          },
+          {
+            "tag": "DIV",
+            "cls": "Hero_top__RRkYH",
+            "opacity": "1",
+            "transform": "none",
+            "width": 1224,
+            "height": 406.265625
+          },
+          {
+            "tag": "DIV",
+            "cls": "Hero_video__rzcbe",
+            "opacity": "1",
+            "transform": "none",
+            "width": 367.1875,
+            "height": 367.1875
+          },
+          {
+            "tag": "VIDEO",
+            "cls": "Hero_video__rzcbe",
+            "opacity": "1",
+            "transform": "none",
+            "width": 367.1875,
+            "height": 367.1875
+          },
+          {
+            "tag": "DIV",
+            "cls": "Hero_bottom__ktiOH",
+            "opacity": "1",
+            "transform": "none",
+            "width": 1224,
+            "height": 107.9375
+          },
+          {
+            "tag": "H3",
+            "cls": "Hero_introText__oP34v",
+            "opacity": "1",
+            "transform": "matrix(1, 0, 0, 1, 0, -70)",
+            "width": 378,
+            "height": 107.9375
+          },
+          {
+            "tag": "DIV",
+            "cls": "Hero_arrow__lxSeM",
+            "opacity": "1",
+            "transform": "none",
+            "width": 91,
+            "height": 71.75
+          }
+        ]
+      }
+    },
+    {
+      "route": "/agency/",
+      "navigationError": null,
+      "external": [],
+      "failed": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "brokenImages": [],
+      "browserVideoWarnings": [],
+      "metrics": {
+        "title": "Our Studio | KOTA Agency London & New York",
+        "bodyTextLength": 3284,
+        "imageCount": 79,
+        "videoCount": 1,
+        "canvasCount": 0,
+        "animationCount": 2,
+        "activeAnimationCount": 2,
+        "canvases": [],
+        "hero": [
+          {
+            "tag": "SECTION",
+            "cls": "Hero_hero__zbooM",
+            "opacity": "1",
+            "transform": "none",
+            "width": 1440,
+            "height": 1000
+          },
+          {
+            "tag": "DIV",
+            "cls": "Hero_top__UZ6SA",
+            "opacity": "1",
+            "transform": "none",
+            "width": 1224,
+            "height": 314.21875
+          },
+          {
+            "tag": "DIV",
+            "cls": "Hero_bottom__pLxrT",
+            "opacity": "1",
+            "transform": "none",
+            "width": 1224,
+            "height": 83.09375
+          },
+          {
+            "tag": "DIV",
+            "cls": "Hero_arrow__WTdEi",
+            "opacity": "1",
+            "transform": "none",
+            "width": 91,
+            "height": 78.75
+          }
+        ]
+      }
+    },
+    {
+      "route": "/culture",
+      "navigationError": null,
+      "external": [],
+      "failed": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "brokenImages": [],
+      "browserVideoWarnings": [
+        {
+          "src": "http://127.0.0.1:8000/__external__/kota-content.b-cdn.net/app/uploads/2024/02/culture-header.mp4",
+          "readyState": 0,
+          "networkState": 3,
+          "error": null
+        }
+      ],
+      "metrics": {
+        "title": "Our Culture | KOTA Creative Agency",
+        "bodyTextLength": 1988,
+        "imageCount": 14,
+        "videoCount": 2,
+        "canvasCount": 1,
+        "animationCount": 2,
+        "activeAnimationCount": 2,
+        "canvases": [
+          {
+            "width": 1440,
+            "height": 823,
+            "rect": {
+              "width": 1440,
+              "height": 823
+            }
+          }
+        ],
+        "hero": [
+          {
+            "tag": "SECTION",
+            "cls": "Hero_hero__oqY7i",
+            "opacity": "1",
+            "transform": "none",
+            "width": 1440,
+            "height": 1000
+          },
+          {
+            "tag": "DIV",
+            "cls": "Hero_top__kCNmW",
+            "opacity": "1",
+            "transform": "none",
+            "width": 1224,
+            "height": 411.328125
+          },
+          {
+            "tag": "DIV",
+            "cls": "Hero_bottom__hzJ1d",
+            "opacity": "1",
+            "transform": "none",
+            "width": 1224,
+            "height": 139.21875
+          },
+          {
+            "tag": "DIV",
+            "cls": "Hero_arrow__ENmti",
+            "opacity": "1",
+            "transform": "none",
+            "width": 297,
+            "height": 127.875
+          },
+          {
+            "tag": "FIGURE",
+            "cls": "Hero_backgroundImage__8G4lQ Hero_desktop__YTtuE",
+            "opacity": "1",
+            "transform": "none",
+            "width": 1440,
+            "height": 1000
+          },
+          {
+            "tag": "FIGURE",
+            "cls": "Hero_backgroundImage__8G4lQ Hero_mobile__xTGQp",
+            "opacity": "1",
+            "transform": "none",
+            "width": 0,
+            "height": 0
+          }
+        ]
+      }
+    },
+    {
+      "route": "/contact",
+      "navigationError": null,
+      "external": [],
+      "failed": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "brokenImages": [],
+      "browserVideoWarnings": [
+        {
+          "src": "http://127.0.0.1:8000/__external__/kota-content.b-cdn.net/app/uploads/2026/07/Short-Preview-homepage.mp4",
+          "readyState": 0,
+          "networkState": 3,
+          "error": null
+        }
+      ],
+      "metrics": {
+        "title": "Contact Us | KOTA Creative Agency London & New York",
+        "bodyTextLength": 1341,
+        "imageCount": 6,
+        "videoCount": 1,
+        "canvasCount": 2,
+        "animationCount": 22,
+        "activeAnimationCount": 22,
+        "canvases": [
+          {
+            "width": 1440,
+            "height": 1000,
+            "rect": {
+              "width": 1440,
+              "height": 1000
+            }
+          },
+          {
+            "width": 1440,
+            "height": 1000,
+            "rect": {
+              "width": 1440,
+              "height": 1000
+            }
+          }
+        ],
+        "hero": [
+          {
+            "tag": "SECTION",
+            "cls": "Hero_hero___ImMv",
+            "opacity": "1",
+            "transform": "none",
+            "width": 1440,
+            "height": 1000
+          },
+          {
+            "tag": "DIV",
+            "cls": "Hero_top__9AiY_",
+            "opacity": "1",
+            "transform": "none",
+            "width": 1224,
+            "height": 411.328125
+          },
+          {
+            "tag": "DIV",
+            "cls": "Hero_bottom___aF_2",
+            "opacity": "1",
+            "transform": "none",
+            "width": 1224,
+            "height": 78.75
+          },
+          {
+            "tag": "DIV",
+            "cls": "Hero_arrow__k_3kI",
+            "opacity": "1",
+            "transform": "none",
+            "width": 91,
+            "height": 78.75
+          }
+        ]
+      }
+    },
+    {
+      "route": "/start-your-project/",
+      "navigationError": null,
+      "external": [],
+      "failed": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "brokenImages": [],
+      "browserVideoWarnings": [],
+      "metrics": {
+        "title": "",
+        "bodyTextLength": 1063,
+        "imageCount": 5,
+        "videoCount": 0,
+        "canvasCount": 1,
+        "animationCount": 4,
+        "activeAnimationCount": 4,
+        "canvases": [
+          {
+            "width": 1440,
+            "height": 1000,
+            "rect": {
+              "width": 1440,
+              "height": 1000
+            }
+          }
+        ],
+        "hero": [
+          {
+            "tag": "SECTION",
+            "cls": "Hero_hero___sHVr",
+            "opacity": "1",
+            "transform": "none",
+            "width": 1440,
+            "height": 603
+          },
+          {
+            "tag": "H1",
+            "cls": "Hero_heading__e5cOe",
+            "opacity": "1",
+            "transform": "matrix(1, 0, 0, 1, 0, -11.7)",
+            "width": 709,
+            "height": 202.99998474121094
+          },
+          {
+            "tag": "DIV",
+            "cls": "Hero_right__B8VBZ",
+            "opacity": "1",
+            "transform": "none",
+            "width": 400,
+            "height": 203
+          },
+          {
+            "tag": "DIV",
+            "cls": "Hero_rightInner__Us8lf",
+            "opacity": "1",
+            "transform": "none",
+            "width": 400,
+            "height": 203
+          },
+          {
+            "tag": "P",
+            "cls": "Hero_contactHeading__GkIRu",
+            "opacity": "1",
+            "transform": "none",
+            "width": 121,
+            "height": 28
+          },
+          {
+            "tag": "A",
+            "cls": "Hero_contactLink___XQ3g CopyText_copyText__OtWNq",
+            "opacity": "1",
+            "transform": "none",
+            "width": 298,
+            "height": 44
+          },
+          {
+            "tag": "A",
+            "cls": "Hero_contactLink___XQ3g",
+            "opacity": "1",
+            "transform": "none",
+            "width": 315,
+            "height": 44
+          },
+          {
+            "tag": "P",
+            "cls": "Hero_moreInfo__NPZ6p",
+            "opacity": "1",
+            "transform": "none",
+            "width": 386,
+            "height": 56
+          },
+          {
+            "tag": "SPAN",
+            "cls": "Hero_moreInfo__NPZ6p",
+            "opacity": "1",
+            "transform": "none",
+            "width": 386,
+            "height": 53
+          }
+        ]
+      }
+    },
+    {
+      "route": "/faqs/",
+      "navigationError": null,
+      "external": [],
+      "failed": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "brokenImages": [],
+      "browserVideoWarnings": [
+        {
+          "src": "http://127.0.0.1:8000/__external__/kota-content.b-cdn.net/app/uploads/2023/10/Kota-loop.mp4",
+          "readyState": 0,
+          "networkState": 3,
+          "error": {
+            "code": 4,
+            "message": "DEMUXER_ERROR_NO_SUPPORTED_STREAMS: FFmpegDemuxer: no supported streams"
+          }
+        }
+      ],
+      "metrics": {
+        "title": "FAQs | KOTA",
+        "bodyTextLength": 4838,
+        "imageCount": 5,
+        "videoCount": 1,
+        "canvasCount": 2,
+        "animationCount": 2,
+        "activeAnimationCount": 2,
+        "canvases": [
+          {
+            "width": 1440,
+            "height": 652,
+            "rect": {
+              "width": 1440,
+              "height": 652
+            }
+          },
+          {
+            "width": 1440,
+            "height": 1000,
+            "rect": {
+              "width": 1440,
+              "height": 1000
+            }
+          }
+        ],
+        "hero": [
+          {
+            "tag": "SECTION",
+            "cls": "Hero_hero__WVEC3",
+            "opacity": "1",
+            "transform": "none",
+            "width": 1440,
+            "height": 1000
+          },
+          {
+            "tag": "DIV",
+            "cls": "Hero_top__8JV3g",
+            "opacity": "1",
+            "transform": "none",
+            "width": 1224,
+            "height": 367.1875
+          },
+          {
+            "tag": "DIV",
+            "cls": "Hero_bottom__AKO9M",
+            "opacity": "1",
+            "transform": "none",
+            "width": 1224,
+            "height": 371.421875
+          },
+          {
+            "tag": "H3",
+            "cls": "Hero_introText__tlAwD",
+            "opacity": "1",
+            "transform": "none",
+            "width": 378,
+            "height": 107.9375
+          },
+          {
+            "tag": "DIV",
+            "cls": "Hero_arrow__SnCvz",
+            "opacity": "1",
+            "transform": "none",
+            "width": 91,
+            "height": 78.75
+          }
+        ]
+      }
+    },
+    {
+      "route": "/newsletter/",
+      "navigationError": null,
+      "external": [],
+      "failed": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "brokenImages": [],
+      "browserVideoWarnings": [],
+      "metrics": {
+        "title": "",
+        "bodyTextLength": 1044,
+        "imageCount": 5,
+        "videoCount": 0,
+        "canvasCount": 1,
+        "animationCount": 3,
+        "activeAnimationCount": 3,
+        "canvases": [
+          {
+            "width": 1440,
+            "height": 1000,
+            "rect": {
+              "width": 1440,
+              "height": 1000
+            }
+          }
+        ],
+        "hero": [
+          {
+            "tag": "SECTION",
+            "cls": "Hero_hero__yhnNN",
+            "opacity": "1",
+            "transform": "none",
+            "width": 1440,
+            "height": 408.8125
+          }
+        ]
+      }
+    },
+    {
+      "route": "/privacy-policy/",
+      "navigationError": null,
+      "external": [],
+      "failed": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "brokenImages": [],
+      "browserVideoWarnings": [],
+      "metrics": {
+        "title": "Privacy Policy - KOTA",
+        "bodyTextLength": 18652,
+        "imageCount": 6,
+        "videoCount": 0,
+        "canvasCount": 1,
+        "animationCount": 1,
+        "activeAnimationCount": 1,
+        "canvases": [
+          {
+            "width": 1440,
+            "height": 652,
+            "rect": {
+              "width": 1440,
+              "height": 652
+            }
+          }
+        ],
+        "hero": []
+      }
+    },
+    {
+      "route": "/service/brand-strategy-and-identity/",
+      "navigationError": null,
+      "external": [],
+      "failed": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "brokenImages": [],
+      "browserVideoWarnings": [
+        {
+          "src": "http://127.0.0.1:8000/__external__/kota-content.b-cdn.net/app/uploads/2023/11/Branding.mp4",
+          "readyState": 0,
+          "networkState": 3,
+          "error": {
+            "code": 4,
+            "message": "DEMUXER_ERROR_NO_SUPPORTED_STREAMS: FFmpegDemuxer: no supported streams"
+          }
+        },
+        {
+          "src": "http://127.0.0.1:8000/__external__/kota-content.b-cdn.net/app/uploads/2024/02/Floan-3-V3-LR.mp4",
+          "readyState": 0,
+          "networkState": 3,
+          "error": {
+            "code": 4,
+            "message": "DEMUXER_ERROR_NO_SUPPORTED_STREAMS: FFmpegDemuxer: no supported streams"
+          }
+        },
+        {
+          "src": "http://127.0.0.1:8000/__external__/kota-content.b-cdn.net/app/uploads/2025/09/Company-Loop4-compressed-2.mp4",
+          "readyState": 0,
+          "networkState": 3,
+          "error": {
+            "code": 4,
+            "message": "DEMUXER_ERROR_NO_SUPPORTED_STREAMS: FFmpegDemuxer: no supported streams"
+          }
+        },
+        {
+          "src": "http://127.0.0.1:8000/__external__/kota-content.b-cdn.net/app/uploads/2025/09/Featured-compressed.mp4",
+          "readyState": 0,
+          "networkState": 3,
+          "error": {
+            "code": 4,
+            "message": "DEMUXER_ERROR_NO_SUPPORTED_STREAMS: FFmpegDemuxer: no supported streams"
+          }
+        }
+      ],
+      "metrics": {
+        "title": "Global Branding Agency in London | Strategy & Identity | KOTA",
+        "bodyTextLength": 12409,
+        "imageCount": 46,
+        "videoCount": 9,
+        "canvasCount": 1,
+        "animationCount": 5,
+        "activeAnimationCount": 5,
+        "canvases": [
+          {
+            "width": 300,
+            "height": 150,
+            "rect": {
+              "width": 0,
+              "height": 0
+            }
+          }
+        ],
+        "hero": [
+          {
+            "tag": "SECTION",
+            "cls": "Hero_hero__18Xqo",
+            "opacity": "1",
+            "transform": "none",
+            "width": 1440,
+            "height": 880
+          },
+          {
+            "tag": "DIV",
+            "cls": "Hero_top__fPz2U",
+            "opacity": "1",
+            "transform": "none",
+            "width": 1224,
+            "height": 367.1875
+          },
+          {
+            "tag": "DIV",
+            "cls": "Hero_video__IHL3y",
+            "opacity": "1",
+            "transform": "none",
+            "width": 367.1875,
+            "height": 367.1875
+          },
+          {
+            "tag": "VIDEO",
+            "cls": "Hero_video__IHL3y",
+            "opacity": "1",
+            "transform": "none",
+            "width": 367.1875,
+            "height": 367.1875
+          },
+          {
+            "tag": "DIV",
+            "cls": "Hero_bottom__5uvI_",
+            "opacity": "1",
+            "transform": "none",
+            "width": 1224,
+            "height": 229.296875
+          },
+          {
+            "tag": "H3",
+            "cls": "Hero_introText__HLM02",
+            "opacity": "1",
+            "transform": "none",
+            "width": 378,
+            "height": 134.921875
+          },
+          {
+            "tag": "DIV",
+            "cls": "Hero_arrow__CVNIo",
+            "opacity": "1",
+            "transform": "none",
+            "width": 91,
+            "height": 78.75
+          }
+        ]
+      }
+    },
+    {
+      "route": "/service/web-design-development/",
+      "navigationError": null,
+      "external": [],
+      "failed": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "brokenImages": [],
+      "browserVideoWarnings": [
+        {
+          "src": "http://127.0.0.1:8000/__external__/kota-content.b-cdn.net/app/uploads/2023/11/Websites-2026.mp4",
+          "readyState": 0,
+          "networkState": 3,
+          "error": {
+            "code": 4,
+            "message": "DEMUXER_ERROR_NO_SUPPORTED_STREAMS: FFmpegDemuxer: no supported streams"
+          }
+        },
+        {
+          "src": "http://127.0.0.1:8000/__external__/kota-content.b-cdn.net/app/uploads/2025/04/Featured2-Compressed.mp4",
+          "readyState": 0,
+          "networkState": 3,
+          "error": {
+            "code": 4,
+            "message": "DEMUXER_ERROR_NO_SUPPORTED_STREAMS: FFmpegDemuxer: no supported streams"
+          }
+        },
+        {
+          "src": "http://127.0.0.1:8000/__external__/kota-content.b-cdn.net/app/uploads/2025/04/Duplicated-Assets.mp4",
+          "readyState": 0,
+          "networkState": 3,
+          "error": {
+            "code": 4,
+            "message": "DEMUXER_ERROR_NO_SUPPORTED_STREAMS: FFmpegDemuxer: no supported streams"
+          }
+        },
+        {
+          "src": "http://127.0.0.1:8000/__external__/kota-content.b-cdn.net/app/uploads/2025/08/GOAT-FeatureVideo.mp4",
+          "readyState": 0,
+          "networkState": 3,
+          "error": {
+            "code": 4,
+            "message": "DEMUXER_ERROR_NO_SUPPORTED_STREAMS: FFmpegDemuxer: no supported streams"
+          }
+        },
+        {
+          "src": "http://127.0.0.1:8000/__external__/kota-content.b-cdn.net/app/uploads/2025/09/Company-Loop4-compressed-2.mp4",
+          "readyState": 0,
+          "networkState": 3,
+          "error": {
+            "code": 4,
+            "message": "DEMUXER_ERROR_NO_SUPPORTED_STREAMS: FFmpegDemuxer: no supported streams"
+          }
+        },
+        {
+          "src": "http://127.0.0.1:8000/__external__/kota-content.b-cdn.net/app/uploads/2024/04/dka-thumbnail-compressed.mp4",
+          "readyState": 0,
+          "networkState": 3,
+          "error": {
+            "code": 4,
+            "message": "DEMUXER_ERROR_NO_SUPPORTED_STREAMS: FFmpegDemuxer: no supported streams"
+          }
+        }
+      ],
+      "metrics": {
+        "title": "Web Design & Development | London & NYC | KOTA",
+        "bodyTextLength": 11024,
+        "imageCount": 49,
+        "videoCount": 11,
+        "canvasCount": 0,
+        "animationCount": 5,
+        "activeAnimationCount": 5,
+        "canvases": [],
+        "hero": [
+          {
+            "tag": "SECTION",
+            "cls": "Hero_hero__18Xqo",
+            "opacity": "1",
+            "transform": "none",
+            "width": 1440,
+            "height": 880
+          },
+          {
+            "tag": "DIV",
+            "cls": "Hero_top__fPz2U",
+            "opacity": "1",
+            "transform": "none",
+            "width": 1224,
+            "height": 367.1875
+          },
+          {
+            "tag": "DIV",
+            "cls": "Hero_video__IHL3y",
+            "opacity": "1",
+            "transform": "none",
+            "width": 367.1875,
+            "height": 367.1875
+          },
+          {
+            "tag": "VIDEO",
+            "cls": "Hero_video__IHL3y",
+            "opacity": "1",
+            "transform": "none",
+            "width": 367.1875,
+            "height": 367.1875
+          },
+          {
+            "tag": "DIV",
+            "cls": "Hero_bottom__5uvI_",
+            "opacity": "1",
+            "transform": "none",
+            "width": 1224,
+            "height": 229.296875
+          },
+          {
+            "tag": "H3",
+            "cls": "Hero_introText__HLM02",
+            "opacity": "1",
+            "transform": "none",
+            "width": 378,
+            "height": 134.921875
+          },
+          {
+            "tag": "DIV",
+            "cls": "Hero_arrow__CVNIo",
+            "opacity": "1",
+            "transform": "none",
+            "width": 91,
+            "height": 78.75
+          }
+        ]
+      }
+    },
+    {
+      "route": "/service/growth-marketing/",
+      "navigationError": null,
+      "external": [],
+      "failed": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "brokenImages": [],
+      "browserVideoWarnings": [
+        {
+          "src": "http://127.0.0.1:8000/__external__/kota-content.b-cdn.net/app/uploads/2023/11/Growth-Marketing.mp4",
+          "readyState": 0,
+          "networkState": 3,
+          "error": {
+            "code": 4,
+            "message": "DEMUXER_ERROR_NO_SUPPORTED_STREAMS: FFmpegDemuxer: no supported streams"
+          }
+        },
+        {
+          "src": "http://127.0.0.1:8000/__external__/kota-content.b-cdn.net/app/uploads/2023/11/seo-geo-V2.mp4",
+          "readyState": 0,
+          "networkState": 3,
+          "error": null
+        },
+        {
+          "src": "http://127.0.0.1:8000/__external__/kota-content.b-cdn.net/app/uploads/2025/02/isi-vid2-1.mp4",
+          "readyState": 0,
+          "networkState": 3,
+          "error": {
+            "code": 4,
+            "message": "DEMUXER_ERROR_NO_SUPPORTED_STREAMS: FFmpegDemuxer: no supported streams"
+          }
+        },
+        {
+          "src": "http://127.0.0.1:8000/__external__/kota-content.b-cdn.net/app/uploads/2025/08/GOAT-FeatureVideo.mp4",
+          "readyState": 0,
+          "networkState": 3,
+          "error": {
+            "code": 4,
+            "message": "DEMUXER_ERROR_NO_SUPPORTED_STREAMS: FFmpegDemuxer: no supported streams"
+          }
+        }
+      ],
+      "metrics": {
+        "title": "Digital Marketing Services | London & NYC | KOTA",
+        "bodyTextLength": 9284,
+        "imageCount": 35,
+        "videoCount": 4,
+        "canvasCount": 1,
+        "animationCount": 4,
+        "activeAnimationCount": 4,
+        "canvases": [
+          {
+            "width": 1440,
+            "height": 611,
+            "rect": {
+              "width": 1440,
+              "height": 611
+            }
+          }
+        ],
+        "hero": [
+          {
+            "tag": "SECTION",
+            "cls": "Hero_hero__18Xqo",
+            "opacity": "1",
+            "transform": "none",
+            "width": 1440,
+            "height": 880
+          },
+          {
+            "tag": "DIV",
+            "cls": "Hero_top__fPz2U",
+            "opacity": "1",
+            "transform": "none",
+            "width": 1224,
+            "height": 367.1875
+          },
+          {
+            "tag": "DIV",
+            "cls": "Hero_video__IHL3y",
+            "opacity": "1",
+            "transform": "none",
+            "width": 367.1875,
+            "height": 367.1875
+          },
+          {
+            "tag": "VIDEO",
+            "cls": "Hero_video__IHL3y",
+            "opacity": "1",
+            "transform": "none",
+            "width": 367.1875,
+            "height": 367.1875
+          },
+          {
+            "tag": "DIV",
+            "cls": "Hero_bottom__5uvI_",
+            "opacity": "1",
+            "transform": "none",
+            "width": 1224,
+            "height": 229.296875
+          },
+          {
+            "tag": "H3",
+            "cls": "Hero_introText__HLM02",
+            "opacity": "1",
+            "transform": "none",
+            "width": 378,
+            "height": 134.921875
+          },
+          {
+            "tag": "DIV",
+            "cls": "Hero_arrow__CVNIo",
+            "opacity": "1",
+            "transform": "none",
+            "width": 91,
+            "height": 78.75
+          }
+        ]
+      }
+    },
+    {
+      "route": "/b2b-transformation/",
+      "navigationError": null,
+      "external": [],
+      "failed": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "brokenImages": [],
+      "browserVideoWarnings": [
+        {
+          "src": "http://127.0.0.1:8000/__external__/kota-content.b-cdn.net/app/uploads/2024/04/thumbnail-compressed.mp4",
+          "readyState": 0,
+          "networkState": 3,
+          "error": {
+            "code": 4,
+            "message": "DEMUXER_ERROR_NO_SUPPORTED_STREAMS: FFmpegDemuxer: no supported streams"
+          }
+        },
+        {
+          "src": "http://127.0.0.1:8000/__external__/kota-content.b-cdn.net/app/uploads/2024/01/tangerine-thumbnail2.mp4",
+          "readyState": 0,
+          "networkState": 3,
+          "error": {
+            "code": 4,
+            "message": "DEMUXER_ERROR_NO_SUPPORTED_STREAMS: FFmpegDemuxer: no supported streams"
+          }
+        }
+      ],
+      "metrics": {
+        "title": "B2B Transformation - KOTA",
+        "bodyTextLength": 2824,
+        "imageCount": 32,
+        "videoCount": 2,
+        "canvasCount": 0,
+        "animationCount": 4,
+        "activeAnimationCount": 4,
+        "canvases": [],
+        "hero": [
+          {
+            "tag": "SECTION",
+            "cls": "Hero_hero__drBQ0",
+            "opacity": "1",
+            "transform": "none",
+            "width": 1440,
+            "height": 880
+          },
+          {
+            "tag": "DIV",
+            "cls": "Hero_top__plNyC",
+            "opacity": "1",
+            "transform": "none",
+            "width": 1224,
+            "height": 443.75
+          },
+          {
+            "tag": "DIV",
+            "cls": "Hero_topContent__VKnSn",
+            "opacity": "1",
+            "transform": "none",
+            "width": 750,
+            "height": 393.75
+          },
+          {
+            "tag": "H3",
+            "cls": "Hero_introText__H9sO_",
+            "opacity": "1",
+            "transform": "none",
+            "width": 500,
+            "height": 107.9375
+          },
+          {
+            "tag": "DIV",
+            "cls": "Hero_video__OxYni",
+            "opacity": "1",
+            "transform": "none",
+            "width": 367.1875,
+            "height": 367.1875
+          },
+          {
+            "tag": "DIV",
+            "cls": "Hero_bottom__5rFZf",
+            "opacity": "1",
+            "transform": "none",
+            "width": 1224,
+            "height": 78.75
+          },
+          {
+            "tag": "DIV",
+            "cls": "Hero_arrow__IRuwV",
+            "opacity": "1",
+            "transform": "none",
+            "width": 1224,
+            "height": 78.75
+          }
+        ]
+      }
+    },
+    {
+      "route": "/healthcare/",
+      "navigationError": null,
+      "external": [],
+      "failed": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "brokenImages": [],
+      "browserVideoWarnings": [
+        {
+          "src": "http://127.0.0.1:8000/__external__/kota-content.b-cdn.net/app/uploads/2024/04/pw-thumbnail-compressed.mp4",
+          "readyState": 0,
+          "networkState": 3,
+          "error": {
+            "code": 4,
+            "message": "DEMUXER_ERROR_NO_SUPPORTED_STREAMS: FFmpegDemuxer: no supported streams"
+          }
+        }
+      ],
+      "metrics": {
+        "title": "Healthcare - KOTA",
+        "bodyTextLength": 3374,
+        "imageCount": 26,
+        "videoCount": 3,
+        "canvasCount": 0,
+        "animationCount": 3,
+        "activeAnimationCount": 3,
+        "canvases": [],
+        "hero": [
+          {
+            "tag": "SECTION",
+            "cls": "Hero_hero__drBQ0",
+            "opacity": "1",
+            "transform": "none",
+            "width": 1440,
+            "height": 880
+          },
+          {
+            "tag": "DIV",
+            "cls": "Hero_top__plNyC",
+            "opacity": "1",
+            "transform": "none",
+            "width": 1224,
+            "height": 443.75
+          },
+          {
+            "tag": "DIV",
+            "cls": "Hero_topContent__VKnSn",
+            "opacity": "1",
+            "transform": "none",
+            "width": 750,
+            "height": 393.75
+          },
+          {
+            "tag": "H3",
+            "cls": "Hero_introText__H9sO_",
+            "opacity": "1",
+            "transform": "none",
+            "width": 500,
+            "height": 107.9375
+          },
+          {
+            "tag": "DIV",
+            "cls": "Hero_video__OxYni",
+            "opacity": "1",
+            "transform": "none",
+            "width": 367.1875,
+            "height": 367.1875
+          },
+          {
+            "tag": "DIV",
+            "cls": "Hero_bottom__5rFZf",
+            "opacity": "1",
+            "transform": "none",
+            "width": 1224,
+            "height": 78.75
+          },
+          {
+            "tag": "DIV",
+            "cls": "Hero_arrow__IRuwV",
+            "opacity": "1",
+            "transform": "none",
+            "width": 1224,
+            "height": 78.75
+          }
+        ]
+      }
+    },
+    {
+      "route": "/media-entertainment/",
+      "navigationError": null,
+      "external": [],
+      "failed": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "brokenImages": [],
+      "browserVideoWarnings": [
+        {
+          "src": "http://127.0.0.1:8000/__external__/kota-content.b-cdn.net/app/uploads/2025/04/Featured2-Compressed.mp4",
+          "readyState": 0,
+          "networkState": 3,
+          "error": {
+            "code": 4,
+            "message": "DEMUXER_ERROR_NO_SUPPORTED_STREAMS: FFmpegDemuxer: no supported streams"
+          }
+        }
+      ],
+      "metrics": {
+        "title": "Media & Entertainment - KOTA",
+        "bodyTextLength": 4324,
+        "imageCount": 31,
+        "videoCount": 5,
+        "canvasCount": 0,
+        "animationCount": 3,
+        "activeAnimationCount": 3,
+        "canvases": [],
+        "hero": [
+          {
+            "tag": "SECTION",
+            "cls": "Hero_hero__drBQ0",
+            "opacity": "1",
+            "transform": "none",
+            "width": 1440,
+            "height": 880
+          },
+          {
+            "tag": "DIV",
+            "cls": "Hero_top__plNyC",
+            "opacity": "1",
+            "transform": "none",
+            "width": 1224,
+            "height": 443.75
+          },
+          {
+            "tag": "DIV",
+            "cls": "Hero_topContent__VKnSn",
+            "opacity": "1",
+            "transform": "none",
+            "width": 750,
+            "height": 393.75
+          },
+          {
+            "tag": "H3",
+            "cls": "Hero_introText__H9sO_",
+            "opacity": "1",
+            "transform": "none",
+            "width": 500,
+            "height": 107.9375
+          },
+          {
+            "tag": "DIV",
+            "cls": "Hero_video__OxYni",
+            "opacity": "1",
+            "transform": "none",
+            "width": 367.1875,
+            "height": 367.1875
+          },
+          {
+            "tag": "DIV",
+            "cls": "Hero_bottom__5rFZf",
+            "opacity": "1",
+            "transform": "none",
+            "width": 1224,
+            "height": 78.75
+          },
+          {
+            "tag": "DIV",
+            "cls": "Hero_arrow__IRuwV",
+            "opacity": "1",
+            "transform": "none",
+            "width": 1224,
+            "height": 78.75
+          }
+        ]
+      }
+    },
+    {
+      "route": "/retail/",
+      "navigationError": null,
+      "external": [],
+      "failed": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "brokenImages": [],
+      "browserVideoWarnings": [
+        {
+          "src": "http://127.0.0.1:8000/__external__/kota-content.b-cdn.net/app/uploads/2024/02/Pison-169.mp4",
+          "readyState": 0,
+          "networkState": 3,
+          "error": {
+            "code": 4,
+            "message": "DEMUXER_ERROR_NO_SUPPORTED_STREAMS: FFmpegDemuxer: no supported streams"
+          }
+        }
+      ],
+      "metrics": {
+        "title": "Retail - KOTA",
+        "bodyTextLength": 3585,
+        "imageCount": 38,
+        "videoCount": 3,
+        "canvasCount": 0,
+        "animationCount": 5,
+        "activeAnimationCount": 5,
+        "canvases": [],
+        "hero": [
+          {
+            "tag": "SECTION",
+            "cls": "Hero_hero__drBQ0",
+            "opacity": "1",
+            "transform": "none",
+            "width": 1440,
+            "height": 880
+          },
+          {
+            "tag": "DIV",
+            "cls": "Hero_top__plNyC",
+            "opacity": "1",
+            "transform": "none",
+            "width": 1224,
+            "height": 373.625
+          },
+          {
+            "tag": "DIV",
+            "cls": "Hero_topContent__VKnSn",
+            "opacity": "1",
+            "transform": "none",
+            "width": 500,
+            "height": 323.625
+          },
+          {
+            "tag": "H3",
+            "cls": "Hero_introText__H9sO_",
+            "opacity": "1",
+            "transform": "none",
+            "width": 500,
+            "height": 134.921875
+          },
+          {
+            "tag": "DIV",
+            "cls": "Hero_video__OxYni",
+            "opacity": "1",
+            "transform": "none",
+            "width": 367.1875,
+            "height": 367.1875
+          },
+          {
+            "tag": "DIV",
+            "cls": "Hero_bottom__5rFZf",
+            "opacity": "1",
+            "transform": "none",
+            "width": 1224,
+            "height": 78.75
+          },
+          {
+            "tag": "DIV",
+            "cls": "Hero_arrow__IRuwV",
+            "opacity": "1",
+            "transform": "none",
+            "width": 1224,
+            "height": 78.75
+          }
+        ]
+      }
+    }
+  ]
+}
