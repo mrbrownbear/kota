@@ -11,6 +11,7 @@ on:
       - 'tools/sync_local_assets.py'
       - 'tools/sync_next_static.py'
       - 'tools/browser_audit.mjs'
+      - 'tools/verify_media.py'
   workflow_dispatch:
 
 permissions:
@@ -35,6 +36,9 @@ jobs:
 
       - name: Verify every referenced visual and media asset
         run: python tools/sync_local_assets.py
+
+      - name: Validate recovered video files
+        run: python tools/verify_media.py
 
       - name: Rebuild and localize capture
         run: |
