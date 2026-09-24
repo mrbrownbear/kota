@@ -24,6 +24,13 @@ fetch_one() {
   return 1
 }
 
+# Restore clean route documents that were absent from the original capture.
+fetch_one "work/index.html" "https://kota.co.uk/work/"
+fetch_one "start-your-project/index.html" "https://kota.co.uk/start-your-project/"
+fetch_one "faqs/index.html" "https://kota.co.uk/faqs/"
+fetch_one "newsletter/index.html" "https://kota.co.uk/newsletter/"
+fetch_one "privacy-policy/index.html" "https://kota.co.uk/privacy-policy/"
+
 fetch_one "_next/static/chunks/2827-f8fce45e8c1f0443.js" "https://kota.co.uk/_next/static/chunks/2827-f8fce45e8c1f0443.js"
 fetch_one "_next/static/chunks/7765-2199a167410a4e62.js" "https://kota.co.uk/_next/static/chunks/7765-2199a167410a4e62.js"
 fetch_one "_next/static/chunks/app/blog/[slug]/page-d99a465d7f04c801.js" "https://kota.co.uk/_next/static/chunks/app/blog/%5Bslug%5D/page-d99a465d7f04c801.js"
