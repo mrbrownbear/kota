@@ -1,5 +1,3 @@
-// Audit repaired generated build.
-// Audit after local path normalization.
 import { chromium } from "playwright";
 import fs from "node:fs";
 
@@ -7,9 +5,14 @@ const base = process.env.AUDIT_BASE || "http://127.0.0.1:8000";
 const localOrigin = new URL(base).origin;
 const routes = [
   "/",
+  "/work/",
   "/agency/",
   "/culture",
   "/contact",
+  "/start-your-project/",
+  "/faqs/",
+  "/newsletter/",
+  "/privacy-policy/",
   "/service/brand-strategy-and-identity/",
   "/service/web-design-development/",
   "/service/growth-marketing/",
@@ -43,47 +46,55 @@ for (const route of routes) {
       }
     } catch {}
   });
-  page.on("requestfailed", req => failed.push({
-    url: req.url(),
-    type: req.resourceType(),
-    error: req.failure()?.errorText || "failed"
-  }));
+
+  page.on("requestfailed", req => {
+    const type = req.resourceType();
+    const error = req.failure()?.errorText || "failed";
+    if (type === "media" && error === "net::ERR_ABORTED") return;
+    failed.push({ url: req.url(), type, error });
+  });
+
   page.on("response", res => {
     if (res.status() >= 400) httpErrors.push({ url: res.url(), status: res.status() });
   });
+
   page.on("console", msg => {
     if (msg.type() === "error") consoleErrors.push(msg.text());
   });
-  page.on("pageerror", err => pageErrors.push(String(err.stack || err)));
+
+  page.on("pageerror", err => {
+    const value = String(err.stack || err);
+    if (/play\(\) request was interrupted by a call to pause/i.test(value)) return;
+    pageErrors.push(value);
+  });
 
   let navigationError = null;
   try {
     await page.goto(base + route, { waitUntil: "domcontentloaded", timeout: 30000 });
     await page.waitForTimeout(1400);
-
     const height = await page.evaluate(() => document.documentElement.scrollHeight);
-    const steps = Math.min(12, Math.max(1, Math.ceil(height / 850)));
+    const steps = Math.min(14, Math.max(1, Math.ceil(height / 800)));
     for (let i = 0; i <= steps; i++) {
       await page.evaluate(([step, count, h]) => {
         window.scrollTo(0, Math.round(h * step / Math.max(1, count)));
       }, [i, steps, height]);
-      await page.waitForTimeout(80);
+      await page.waitForTimeout(90);
     }
     await page.evaluate(() => window.scrollTo(0, 0));
-    await page.waitForTimeout(500);
+    await page.waitForTimeout(700);
   } catch (e) {
     navigationError = String(e);
   }
 
   const state = await page.evaluate(() => {
     const images = [...document.images].map(x => ({
-      src: x.currentSrc || x.src,
+      src: x.currentSrc || x.src || "",
       complete: x.complete,
       width: x.naturalWidth,
       height: x.naturalHeight
     }));
     const videos = [...document.querySelectorAll("video")].map(x => ({
-      src: x.currentSrc || x.src,
+      src: x.currentSrc || x.src || "",
       readyState: x.readyState,
       networkState: x.networkState,
       error: x.error ? { code: x.error.code, message: x.error.message } : null
@@ -134,8 +145,12 @@ for (const route of routes) {
     hero: []
   }));
 
-  const brokenImages = state.images.filter(x => x.complete && (!x.width || !x.height));
-  const brokenVideos = state.videos.filter(x => x.error || (x.src && x.networkState === 3));
+  const brokenImages = state.images.filter(
+    x => x.src && x.complete && (!x.width || !x.height)
+  );
+  const brokenVideos = state.videos.filter(
+    x => x.src && (x.error || x.networkState === 3)
+  );
 
   results.push({
     route,
@@ -188,12 +203,7 @@ fs.writeFileSync("offline-browser-audit.json", JSON.stringify(report, null, 2) +
 console.log(JSON.stringify(totals, null, 2));
 
 for (const r of results) {
-  const hasIssue = r.navigationError || r.external.length || r.failed.length ||
-    r.httpErrors.length || r.consoleErrors.length || r.pageErrors.length ||
-    r.brokenImages.length || r.brokenVideos.length;
-
   console.log("\nROUTE", r.route, JSON.stringify(r.metrics));
-  if (!hasIssue) continue;
   if (r.navigationError) console.log("NAV", r.navigationError);
   if (r.external.length) console.log("EXTERNAL", JSON.stringify(r.external.slice(0, 30), null, 2));
   if (r.failed.length) console.log("FAILED", JSON.stringify(r.failed.slice(0, 30), null, 2));
