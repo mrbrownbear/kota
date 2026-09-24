@@ -1,4 +1,4 @@
-import { chromium } from "playwright";
+// Audit repaired generated build.\nimport { chromium } from "playwright";
 import fs from "node:fs";
 
 const base = process.env.AUDIT_BASE || "http://127.0.0.1:8000";
